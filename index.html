@@ -1,781 +1,768 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>STAT 103: Statistical Thinking Quiz + AI App Builder Guide</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: system-ui, 'Segoe UI', 'Inter', 'Roboto', sans-serif;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<title>STAT 103 – Statistical Thinking App</title>
+<meta name="theme-color" content="#ffb347">
 
-        body {
-            background: linear-gradient(145deg, #f5f7fc 0%, #e9eef4 100%);
-            min-height: 100vh;
-            padding: 2rem 1.5rem;
-        }
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: system-ui, 'Segoe UI', 'Inter', 'Roboto', sans-serif;
+}
 
-        /* main card container */
-        .app-container {
-            max-width: 1100px;
-            margin: 0 auto;
-            background: rgba(255,255,255,0.92);
-            backdrop-filter: blur(0px);
-            border-radius: 2rem;
-            box-shadow: 0 20px 35px -12px rgba(0,0,0,0.2), 0 1px 3px rgba(0,0,0,0.05);
-            overflow: hidden;
-            transition: all 0.2s ease;
-        }
+body {
+  background: linear-gradient(145deg, #f5f7fc, #e9eef4);
+  min-height: 100vh;
+  padding: 0.8rem;
+}
 
-        /* header with book theme */
-        .hero {
-            background: #1e2a3e;
-            padding: 1.8rem 2rem;
-            color: white;
-            border-bottom: 4px solid #ffb347;
-        }
+.app-container {
+  max-width: 1100px;
+  margin: auto;
+  background: white;
+  border-radius: 1.5rem;
+  box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+  overflow: hidden;
+}
 
-        .hero h1 {
-            font-size: 1.9rem;
-            font-weight: 700;
-            letter-spacing: -0.3px;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            flex-wrap: wrap;
-        }
+/* HEADER */
+.hero {
+  background: #1e2a3e;
+  color: white;
+  padding: 1.4rem;
+  border-bottom: 4px solid #ffb347;
+}
 
-        .hero h1 small {
-            font-size: 0.9rem;
-            background: #ffb34720;
-            padding: 0.2rem 0.8rem;
-            border-radius: 40px;
-            font-weight: normal;
-            color: #ffdd99;
-        }
+.hero h1 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  line-height: 1.2;
+}
 
-        .hero p {
-            margin-top: 0.5rem;
-            opacity: 0.85;
-            font-size: 0.95rem;
-        }
+.hero h1 small {
+  font-size: 0.85rem;
+  background: #ffb34730;
+  padding: 0.2rem 0.6rem;
+  border-radius: 20px;
+  margin-left: 6px;
+}
 
-        .syllabus-badge {
-            margin-top: 0.8rem;
-            display: inline-flex;
-            gap: 12px;
-            flex-wrap: wrap;
-        }
+.hero p {
+  margin-top: 0.4rem;
+  font-size: 0.9rem;
+  opacity: 0.9;
+}
 
-        .syllabus-badge a {
-            color: #ffdd99;
-            text-decoration: none;
-            font-size: 0.85rem;
-            background: #2c3e44;
-            padding: 0.25rem 1rem;
-            border-radius: 30px;
-            transition: 0.2s;
-        }
+/* LINKS */
+.syllabus-badge {
+  margin-top: 0.8rem;
+  display: flex;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+}
 
-        .syllabus-badge a:hover {
-            background: #ffb347;
-            color: #1e2a3e;
-        }
+.syllabus-badge a {
+  background: #2c3e44;
+  color: #ffdd99;
+  padding: 0.45rem 1rem;
+  border-radius: 30px;
+  font-size: 0.85rem;
+  text-decoration: none;
+  text-align: center;
+  transition: 0.2s;
+}
 
-        /* TAB BAR */
-        .tab-bar {
-            display: flex;
-            background: white;
-            border-bottom: 1px solid #e2e8f0;
-            padding: 0 1.5rem;
-            gap: 0.2rem;
-        }
-        .tab-btn {
-            background: transparent;
-            border: none;
-            padding: 1rem 1.8rem;
-            font-size: 1rem;
-            font-weight: 600;
-            color: #4a5568;
-            cursor: pointer;
-            transition: 0.2s;
-            border-radius: 30px 30px 0 0;
-            margin-bottom: -1px;
-        }
-        .tab-btn:hover {
-            background: #f1f5f9;
-            color: #ffb347;
-        }
-        .tab-btn.active {
-            color: #ffb347;
-            border-bottom: 3px solid #ffb347;
-            background: #fefaf5;
-        }
+.syllabus-badge a:hover {
+  background: #ffb347;
+  color: #1e2a3e;
+}
 
-        /* tab content panes */
-        .tab-pane {
-            display: none;
-            animation: fade 0.2s ease;
-        }
-        .tab-pane.active-pane {
-            display: block;
-        }
-        @keyframes fade {
-            from { opacity: 0; transform: translateY(5px);}
-            to { opacity: 1; transform: translateY(0);}
-        }
+/* TABS */
+.tab-bar {
+  display: flex;
+  background: #fff;
+  border-bottom: 1px solid #e2e8f0;
+}
 
-        /* quiz selector inside quiz pane */
-        .quiz-selector {
-            background: white;
-            padding: 1.5rem 2rem;
-            border-bottom: 1px solid #e2e8f0;
-            display: flex;
-            flex-wrap: wrap;
-            align-items: baseline;
-            justify-content: space-between;
-            gap: 1rem;
-        }
+.tab-btn {
+  flex: 1;
+  border: none;
+  background: none;
+  padding: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s;
+}
 
-        .selector-group {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            flex-wrap: wrap;
-        }
+.tab-btn.active {
+  color: #ffb347;
+  border-bottom: 3px solid #ffb347;
+  background: #fefaf5;
+}
 
-        .selector-group label {
-            font-weight: 600;
-            color: #1f2a44;
-            background: #f1f5f9;
-            padding: 0.3rem 1rem;
-            border-radius: 40px;
-            font-size: 0.9rem;
-        }
+.tab-pane { display: none; }
+.active-pane { display: block; }
 
-        select {
-            background: #f8fafc;
-            border: 1.5px solid #cbd5e1;
-            padding: 0.6rem 2rem 0.6rem 1rem;
-            border-radius: 60px;
-            font-size: 1rem;
-            font-weight: 500;
-            color: #0f172a;
-            cursor: pointer;
-            outline: none;
-            transition: all 0.2s;
-        }
+/* QUIZ */
+.quiz-selector {
+  padding: 1rem;
+  border-bottom: 1px solid #e2e8f0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.8rem;
+}
 
-        select:focus {
-            border-color: #ffb347;
-            box-shadow: 0 0 0 3px rgba(255,180,71,0.2);
-        }
+.quiz-selector label {
+  font-weight: 600;
+  color: #1e2a3e;
+}
 
-        .info-chip {
-            background: #eef2ff;
-            padding: 0.4rem 1rem;
-            border-radius: 40px;
-            font-size: 0.85rem;
-            color: #2c3e66;
-        }
+select {
+  padding: 0.5rem 1rem;
+  border-radius: 2rem;
+  border: 1px solid #cbd5e1;
+  background: white;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
 
-        /* quiz body */
-        .quiz-panel {
-            padding: 2rem;
-        }
+.quiz-panel {
+  padding: 1rem;
+}
 
-        .question-card {
-            background: #ffffffdd;
-            backdrop-filter: blur(2px);
-            margin-bottom: 1.8rem;
-            border-radius: 1.5rem;
-            padding: 1.2rem 1.5rem;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.03), 0 1px 2px rgba(0,0,0,0.05);
-            border: 1px solid #edf2f7;
-            transition: 0.1s;
-        }
+.question-card {
+  background: white;
+  border: 1px solid #edf2f7;
+  border-radius: 1rem;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+}
 
-        .q-num {
-            display: inline-block;
-            background: #ffb34720;
-            color: #b45f06;
-            font-weight: 700;
-            font-size: 0.75rem;
-            padding: 0.2rem 0.7rem;
-            border-radius: 30px;
-            margin-bottom: 0.7rem;
-        }
+.q-num {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #b45309;
+  background: #ffb34720;
+  display: inline-block;
+  padding: 0.2rem 0.7rem;
+  border-radius: 20px;
+}
 
-        .question-text {
-            font-size: 1.1rem;
-            font-weight: 500;
-            margin-bottom: 1rem;
-            color: #0c1b2f;
-            line-height: 1.4;
-        }
+.question-text {
+  margin: 0.7rem 0 0.9rem;
+  font-size: 1rem;
+  font-weight: 500;
+  line-height: 1.4;
+}
 
-        .options {
-            display: flex;
-            flex-direction: column;
-            gap: 0.7rem;
-            margin-left: 0.5rem;
-        }
+.options {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
 
-        .option {
-            display: flex;
-            align-items: center;
-            gap: 0.8rem;
-            flex-wrap: wrap;
-            cursor: pointer;
-            padding: 0.3rem 0.5rem;
-            border-radius: 60px;
-            transition: background 0.1s;
-        }
+.option {
+  display: flex;
+  gap: 0.7rem;
+  align-items: center;
+  padding: 0.5rem 0.6rem;
+  border-radius: 12px;
+  cursor: pointer;
+}
 
-        .option:hover {
-            background: #fef9e6;
-        }
+.option:hover {
+  background: #fef9e6;
+}
 
-        input[type="radio"] {
-            accent-color: #ffb347;
-            width: 1.1rem;
-            height: 1.1rem;
-            margin: 0;
-        }
+input[type=radio] {
+  accent-color: #ffb347;
+  width: 1.1rem;
+  height: 1.1rem;
+  margin: 0;
+}
 
-        .option label {
-            font-size: 0.95rem;
-            color: #2d3a4b;
-            font-weight: 450;
-            flex: 1;
-        }
+.feedback {
+  margin-top: 0.5rem;
+  font-size: 0.85rem;
+  font-weight: 500;
+}
 
-        .feedback {
-            margin-top: 0.8rem;
-            font-size: 0.85rem;
-            padding-left: 1.8rem;
-            font-weight: 500;
-            opacity: 0.9;
-        }
+.feedback.correct { color: #2b6e3c; }
+.feedback.wrong { color: #c2412c; }
 
-        .feedback.correct {
-            color: #2b6e3c;
-        }
+.action-bar {
+  position: sticky;
+  bottom: 0;
+  background: white;
+  padding: 0.8rem;
+  border-top: 1px solid #e2e8f0;
+  display: flex;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+  margin-top: 0.5rem;
+}
 
-        .feedback.wrong {
-            color: #c2412c;
-        }
+button {
+  flex: 1;
+  padding: 0.8rem;
+  border-radius: 30px;
+  border: none;
+  background: #1e2a3e;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s;
+  font-size: 0.9rem;
+}
 
-        /* actions */
-        .action-bar {
-            display: flex;
-            justify-content: space-between;
-            flex-wrap: wrap;
-            gap: 1rem;
-            margin-top: 2rem;
-            padding-top: 0.8rem;
-            border-top: 1px solid #e2e8f0;
-        }
+button:hover {
+  background: #ffb347;
+  color: #1e2a3e;
+  transform: scale(0.98);
+}
 
-        button {
-            background: #1e2a3e;
-            border: none;
-            padding: 0.7rem 1.6rem;
-            border-radius: 60px;
-            font-weight: 600;
-            font-size: 0.9rem;
-            color: white;
-            cursor: pointer;
-            transition: 0.2s;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-        }
+.score-area {
+  flex-basis: 100%;
+  background: #fef9e6;
+  padding: 0.6rem;
+  border-radius: 30px;
+  text-align: center;
+  font-weight: 700;
+  color: #b45309;
+}
 
-        button:hover {
-            background: #ffb347;
-            color: #1e2a3e;
-            transform: scale(0.98);
-        }
+/* GUIDE TAB STYLES */
+.guide-content {
+  padding: 0.5rem 0;
+}
+.guide-section {
+  background: #f8fafc;
+  border-radius: 1.2rem;
+  padding: 1.2rem;
+  margin-bottom: 1.2rem;
+  border-left: 4px solid #ffb347;
+}
+.guide-section h4 {
+  color: #1e2a3e;
+  margin-bottom: 0.8rem;
+  font-size: 1.1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+.step-number {
+  display: inline-block;
+  background: #ffb347;
+  color: #1e2a3e;
+  font-weight: bold;
+  width: 28px;
+  height: 28px;
+  text-align: center;
+  line-height: 28px;
+  border-radius: 30px;
+  font-size: 0.85rem;
+  margin-right: 0.6rem;
+}
+.code-block {
+  background: #0f172a;
+  color: #e2e8f0;
+  padding: 0.8rem;
+  border-radius: 0.8rem;
+  font-family: monospace;
+  font-size: 0.8rem;
+  overflow-x: auto;
+  margin: 0.8rem 0;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+.ai-tools {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin: 0.8rem 0;
+}
+.ai-badge {
+  background: white;
+  border-radius: 2rem;
+  padding: 0.4rem 1rem;
+  font-weight: 500;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+  border: 1px solid #e2e8f0;
+}
+.deploy-note {
+  background: #e6f7e6;
+  border-radius: 1rem;
+  padding: 1rem;
+  margin-top: 1rem;
+}
+hr {
+  margin: 1rem 0;
+  border-color: #e2e8f0;
+}
+ul, ol {
+  margin-left: 1.5rem;
+  margin-top: 0.5rem;
+}
+li {
+  margin: 0.3rem 0;
+}
+a {
+  color: #ffb347;
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;
+}
 
-        .score-area {
-            background: #fef9e6;
-            padding: 0.6rem 1.4rem;
-            border-radius: 40px;
-            font-weight: 700;
-            color: #b45309;
-        }
-
-        /* ========= AI + GITHUB TAB STYLES ========= */
-        .guide-container {
-            background: white;
-            padding: 2rem;
-        }
-        .guide-header {
-            margin-bottom: 1.8rem;
-        }
-        .guide-header h2 {
-            font-size: 1.8rem;
-            background: linear-gradient(135deg, #1e2a3e, #ffb347);
-            background-clip: text;
-            -webkit-background-clip: text;
-            color: transparent;
-            display: inline-block;
-        }
-        .ai-card-grid {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 1.2rem;
-            margin: 1.5rem 0 2rem 0;
-        }
-        .ai-tool {
-            background: #f8fafc;
-            border-radius: 1.5rem;
-            padding: 1.2rem;
-            flex: 1;
-            min-width: 160px;
-            border-left: 4px solid #ffb347;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.03);
-        }
-        .ai-tool h3 {
-            font-size: 1.3rem;
-            margin-bottom: 0.3rem;
-        }
-        .step-container {
-            background: #fef9e6;
-            border-radius: 1.5rem;
-            padding: 1.5rem;
-            margin: 1.5rem 0;
-        }
-        .step {
-            margin-bottom: 1.6rem;
-            border-left: 3px solid #ffb347;
-            padding-left: 1.2rem;
-        }
-        .step-number {
-            display: inline-block;
-            background: #1e2a3e;
-            color: white;
-            font-weight: bold;
-            width: 28px;
-            height: 28px;
-            text-align: center;
-            line-height: 28px;
-            border-radius: 30px;
-            font-size: 0.85rem;
-            margin-right: 0.8rem;
-        }
-        .step-title {
-            font-weight: 700;
-            font-size: 1.1rem;
-        }
-        .code-snip {
-            background: #0f172a;
-            color: #e2e8f0;
-            padding: 0.8rem 1rem;
-            border-radius: 1rem;
-            font-family: monospace;
-            font-size: 0.8rem;
-            margin-top: 0.6rem;
-            overflow-x: auto;
-            white-space: pre-wrap;
-            word-break: break-word;
-        }
-        .deploy-note {
-            background: #e6f7e6;
-            border-radius: 1rem;
-            padding: 1rem;
-            margin-top: 1.2rem;
-        }
-        .footer-note {
-            font-size: 0.8rem;
-            color: #4b5563;
-            margin-top: 1rem;
-            text-align: center;
-        }
-        a {
-            color: #ca8a04;
-            text-decoration: none;
-        }
-        hr {
-            margin: 1rem 0;
-            border-color: #e2e8f0;
-        }
-    </style>
+/* MOBILE */
+@media (max-width: 768px) {
+  .syllabus-badge a {
+    flex: 1;
+    font-size: 0.85rem;
+  }
+  .hero h1 {
+    font-size: 1.3rem;
+  }
+  .quiz-selector {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  select {
+    width: 100%;
+  }
+  .option {
+    padding: 0.7rem 0.5rem;
+  }
+}
+</style>
 </head>
+
 <body>
 
 <div class="app-container">
-    <div class="hero">
-        <h1>
-            📊 STAT 103: Statistical Thinking 
-            <small>Quiz + AI App Builder Guide</small>
-        </h1>
-        <p>Based on <strong>“Statistical Thinking”</strong> by Shiju Zhang (Quarto Pub) + RPubs syllabus</p>
-        <div class="syllabus-badge">
-            <a href="https://rpubs.com/scsustat/stat103syllabus" target="_blank" rel="noopener">📘 View Official Syllabus (RPubs)</a>
-            <a href="https://szhang.quarto.pub/stat103/" target="_blank" rel="noopener">📖 Full Textbook: STAT 103</a>
-        </div>
+
+  <div class="hero">
+    <h1>📊 STAT 103 <small>Statistical Thinking</small></h1>
+    <p>Course Practice App — quizzes aligned with syllabus and lecture notes</p>
+
+    <div class="syllabus-badge">
+      <a href="https://rpubs.com/scsustat/stat103syllabus" target="_blank" rel="noopener">
+        📘 Official Syllabus
+      </a>
+      <a href="https://szhang.quarto.pub/stat103/" target="_blank" rel="noopener">
+        📖 Lecture Notes / Textbook
+      </a>
+    </div>
+  </div>
+
+  <div class="tab-bar">
+    <button class="tab-btn active" data-tab="quiz-tab">📝 Quizzes</button>
+    <button class="tab-btn" data-tab="guide-tab">🤖 AI + GitHub Guide</button>
+  </div>
+
+  <!-- QUIZ TAB -->
+  <div id="quiz-tab" class="tab-pane active-pane">
+    <div class="quiz-selector">
+      <label><strong>📂 Select Chapter</strong></label>
+      <select id="chapterSelect">
+        <option value="0">📘 Chapter 0: Intro to Statistical Thinking</option>
+        <option value="1">📈 Chapter 1: Data & Descriptive Statistics</option>
+        <option value="2">🎲 Chapter 2: Probability & Distributions</option>
+        <option value="3">🔍 Chapter 3: Statistical Inference</option>
+        <option value="4">⚖️ Chapter 4: Study Design & Data Ethics</option>
+      </select>
     </div>
 
-    <!-- Tab Navigation -->
-    <div class="tab-bar">
-        <button class="tab-btn active" data-tab="quiz-tab">📝 Chapter Quizzes (20 per chapter)</button>
-        <button class="tab-btn" data-tab="guide-tab">🤖 How to Make an App with AI + GitHub</button>
+    <div class="quiz-panel">
+      <div id="questionsContainer"></div>
+
+      <div class="action-bar">
+        <button id="checkAnswersBtn">✅ Check Answers</button>
+        <button id="resetQuizBtn">🔄 Reset Quiz</button>
+        <div id="scoreDisplay" class="score-area">Score: --/20</div>
+      </div>
     </div>
+  </div>
 
-    <!-- ========= TAB 1: QUIZ PANEL ========= -->
-    <div id="quiz-tab" class="tab-pane active-pane">
-        <div class="quiz-selector">
-            <div class="selector-group">
-                <label>📂 Select chapter quiz</label>
-                <select id="chapterSelect">
-                    <option value="0">📘 Chapter 0: Intro to Statistical Thinking</option>
-                    <option value="1">📈 Chapter 1: Data & Descriptive Statistics</option>
-                    <option value="2">🎲 Chapter 2: Probability & Distributions</option>
-                    <option value="3">🔍 Chapter 3: Statistical Inference (Basic)</option>
-                    <option value="4">⚖️ Chapter 4: Study Design & Data Ethics</option>
-                </select>
-            </div>
-            <div class="info-chip">✔️ 20 questions per chapter | Dropdown quiz</div>
+  <!-- AI + GITHUB GUIDE TAB (Detailed step-by-step) -->
+  <div id="guide-tab" class="tab-pane">
+    <div class="quiz-panel guide-content">
+      <h3 style="margin-bottom: 0.8rem;">🤖 How to Build This App with AI & Deploy on GitHub</h3>
+      <p style="margin-bottom: 1rem; color: #4a5568;">Follow these 6 simple steps — no coding experience required. Use Claude, ChatGPT, or DeepSeek to generate the app, then host it for free on GitHub Pages.</p>
+
+      <!-- AI Tools -->
+      <div class="guide-section">
+        <h4>✨ Choose your AI assistant</h4>
+        <div class="ai-tools">
+          <span class="ai-badge">🧠 Claude (Anthropic)</span>
+          <span class="ai-badge">🌊 DeepSeek</span>
+          <span class="ai-badge">💬 ChatGPT (GPT-4/3.5)</span>
+          <span class="ai-badge">🐙 GitHub Pages (free)</span>
         </div>
-        <div class="quiz-panel" id="quizPanel">
-            <div id="questionsContainer">Loading questions...</div>
-            <div class="action-bar">
-                <div>
-                    <button id="checkAnswersBtn">✅ Check answers</button>
-                    <button id="resetQuizBtn">🔄 Reset current quiz</button>
-                </div>
-                <div id="scoreDisplay" class="score-area">Score: --/20</div>
-            </div>
+        <p>Each AI can generate a complete, self-contained HTML/CSS/JS quiz app from a simple prompt.</p>
+      </div>
+
+      <!-- Step 1 -->
+      <div class="guide-section">
+        <h4><span class="step-number">1</span> Write a clear prompt for the AI</h4>
+        <p>Copy and paste this prompt into Claude, ChatGPT, or DeepSeek:</p>
+        <div class="code-block">
+          "Create a self-contained HTML/CSS/JS quiz app for STAT103 Statistical Thinking. 
+          Include 20 multiple-choice questions per chapter (Ch 0: Introduction to Statistical Thinking, 
+          Ch1: Data & Descriptive Statistics, Ch2: Probability & Distributions, Ch3: Statistical Inference, 
+          Ch4: Study Design & Data Ethics). Add a dropdown to switch chapters, show score, 
+          check answers, and reset. Make it mobile-friendly and visually clean. 
+          Base questions on the textbook at https://szhang.quarto.pub/stat103/ and syllabus at https://rpubs.com/scsustat/stat103syllabus"
         </div>
+        <p>💡 <strong>Pro tip:</strong> Provide the syllabus links to help AI generate realistic statistics questions.</p>
+      </div>
+
+      <!-- Step 2 -->
+      <div class="guide-section">
+        <h4><span class="step-number">2</span> Generate & test the HTML code</h4>
+        <p>AI will produce a complete HTML document. Copy all the code. On your computer:</p>
+        <ul>
+          <li>Open a text editor (Notepad, VS Code, or TextEdit)</li>
+          <li>Paste the code</li>
+          <li>Save as <strong>index.html</strong></li>
+          <li>Double-click the file to test it in your browser</li>
+        </ul>
+        <p>✅ The quiz should work immediately on your phone or computer.</p>
+      </div>
+
+      <!-- Step 3 -->
+      <div class="guide-section">
+        <h4><span class="step-number">3</span> Create a GitHub account & repository</h4>
+        <p>1. Go to <a href="https://github.com" target="_blank">github.com</a> and sign up (free).<br>
+        2. Click the <strong>+</strong> icon → <strong>New repository</strong>.<br>
+        3. Name it (e.g., <code>stat103-quiz-app</code>). Keep it <strong>Public</strong>.<br>
+        4. Click <strong>Create repository</strong>.</p>
+      </div>
+
+      <!-- Step 4 -->
+      <div class="guide-section">
+        <h4><span class="step-number">4</span> Upload your index.html file</h4>
+        <p>In your new repository page:</p>
+        <ul>
+          <li>Click <strong>Add file</strong> → <strong>Upload files</strong></li>
+          <li>Drag and drop your <code>index.html</code> file</li>
+          <li>Write a commit message like "Add STAT103 quiz app"</li>
+          <li>Click <strong>Commit changes</strong></li>
+        </ul>
+      </div>
+
+      <!-- Step 5 -->
+      <div class="guide-section">
+        <h4><span class="step-number">5</span> Enable GitHub Pages (free hosting)</h4>
+        <p>1. Go to repository <strong>Settings</strong> (tab at top).<br>
+        2. In left sidebar, click <strong>Pages</strong>.<br>
+        3. Under "Branch", select <strong>main</strong> (or master) and <strong>/(root)</strong> folder.<br>
+        4. Click <strong>Save</strong>.<br>
+        5. After 1-2 minutes, your app is live at:<br>
+        <code>https://&lt;your-username&gt;.github.io/&lt;repository-name&gt;/</code></p>
+        <div class="deploy-note">
+          🌐 <strong>Example:</strong> If your username is "johndoe" and repo is "stat103-quiz-app", URL becomes:<br>
+          <code>https://johndoe.github.io/stat103-quiz-app/</code>
+        </div>
+      </div>
+
+      <!-- Step 6 -->
+      <div class="guide-section">
+        <h4><span class="step-number">6</span> Share & update your app</h4>
+        <p>Share the GitHub Pages link with classmates or instructors. To update:</p>
+        <ul>
+          <li>Ask AI to modify the app (e.g., "add a dark mode" or "add 20 more questions")</li>
+          <li>Copy the new code → save as index.html again</li>
+          <li>In GitHub, upload the new file (overwrite) → commit</li>
+          <li>Website updates automatically in 1-2 minutes</li>
+        </ul>
+      </div>
+
+      <!-- Bonus prompts -->
+      <div class="guide-section">
+        <h4>🎯 Example prompts to extend your app</h4>
+        <div class="code-block">
+          • "Add a timer that shows how long it takes to complete the quiz."<br>
+          • "Save the user's progress using localStorage so answers persist after refresh."<br>
+          • "Generate 20 new realistic questions for Chapter 2 about probability distributions."<br>
+          • "Add a progress bar showing how many questions have been answered."<br>
+          • "Include a 'Show answers' button that reveals the correct answers."
+        </div>
+      </div>
+
+      <!-- Quick reference -->
+      <div class="deploy-note">
+        <strong>⚡ Quick Reference Card</strong><br>
+        • <strong>AI Tools:</strong> Claude, ChatGPT, DeepSeek → paste prompt → get HTML → save as index.html<br>
+        • <strong>GitHub:</strong> Create repo → upload index.html → Settings → Pages → branch: main → Save<br>
+        • <strong>Result:</strong> Free, mobile-friendly web app accessible anywhere<br>
+        • <strong>Course Links:</strong> <a href="https://rpubs.com/scsustat/stat103syllabus" target="_blank">RPubs Syllabus</a> | <a href="https://szhang.quarto.pub/stat103/" target="_blank">STAT103 Textbook</a>
+      </div>
+
+      <hr>
+      <p style="font-size: 0.8rem; text-align: center; color: #64748b;">
+        🔓 This entire app (quizzes + guide) was built with AI assistance — and you can replicate it in under 10 minutes.
+      </p>
     </div>
+  </div>
 
-    <!-- ========= TAB 2: AI + GITHUB DETAILED GUIDE ========= -->
-    <div id="guide-tab" class="tab-pane">
-        <div class="guide-container">
-            <div class="guide-header">
-                <h2>✨ Build & Deploy Your Own HTML App with AI + GitHub</h2>
-                <p>Step‑by‑step instructions using Claude, DeepSeek, ChatGPT, and GitHub Pages — no coding experience required.</p>
-            </div>
-
-            <div class="ai-card-grid">
-                <div class="ai-tool"><h3>🧠 Claude</h3><p>Anthropic's assistant, great for frontend & detailed UI generation.</p></div>
-                <div class="ai-tool"><h3>🌊 DeepSeek</h3><p>Strong reasoning and coding abilities, free tier available.</p></div>
-                <div class="ai-tool"><h3>💬 ChatGPT</h3><p>GPT-4 / GPT-3.5 turbo: excellent for generating HTML/CSS/JS quizzes.</p></div>
-                <div class="ai-tool"><h3>🐙 GitHub</h3><p>Free hosting via GitHub Pages, version control included.</p></div>
-            </div>
-
-            <div class="step-container">
-                <div class="step">
-                    <span class="step-number">1</span>
-                    <span class="step-title">📝 Write a clear prompt for the AI</span>
-                    <div class="code-snip">
-                        Example: "Create a self-contained HTML/CSS/JS quiz app for STAT103 Statistical Thinking. Include 20 multiple-choice questions per chapter (Ch 0: Introduction, Ch1: Descriptive Stats, Ch2: Probability, Ch3: Inference, Ch4: Ethics). Add a dropdown to switch chapters, show score, check answers, and reset. Style it like a modern learning app."
-                    </div>
-                    <p style="margin-top: 8px;">💡 Tip: Provide syllabus links (RPubs, Quarto book) to let AI extract realistic topics.</p>
-                </div>
-                <div class="step">
-                    <span class="step-number">2</span>
-                    <span class="step-title">🧪 Generate & test the HTML code</span>
-                    <p>Copy the AI response (full HTML). Save it as <strong>index.html</strong> on your computer. Double-click to test locally in your browser. Make tweaks: ask AI to “add a feedback message” or “change color scheme”.</p>
-                </div>
-                <div class="step">
-                    <span class="step-number">3</span>
-                    <span class="step-title">🐙 Create a GitHub repository</span>
-                    <p>1. Log into <a href="https://github.com" target="_blank">github.com</a> → click <strong>New repository</strong>.<br>
-                    2. Name it (e.g., <code>stat103-quiz-app</code>), keep it <strong>Public</strong> (for free hosting).<br>
-                    3. Click <strong>Create repository</strong>.</p>
-                </div>
-                <div class="step">
-                    <span class="step-number">4</span>
-                    <span class="step-title">⬆️ Upload your index.html file</span>
-                    <p>In the new repo page, click <strong>Add file</strong> → <strong>Upload files</strong>. Drag and drop your <code>index.html</code>. Write a short commit message like “Add quiz app”. Click <strong>Commit changes</strong>.</p>
-                </div>
-                <div class="step">
-                    <span class="step-number">5</span>
-                    <span class="step-title">🌐 Enable GitHub Pages</span>
-                    <p>Go to repository <strong>Settings</strong> → <strong>Pages</strong> (left sidebar). Under "Branch", select <strong>main</strong> (or master) and <strong>/(root)</strong> folder. Click <strong>Save</strong>. After 1 minute, your app will be live at:<br>
-                    <code>https://&lt;your-username&gt;.github.io/&lt;repository-name&gt;/</code></p>
-                </div>
-                <div class="step">
-                    <span class="step-number">6</span>
-                    <span class="step-title">🔄 Update & iterate with AI</span>
-                    <p>Want more features? Ask AI: “add a timer” or “save progress with localStorage”. Copy new code, upload again to GitHub — changes go live instantly.</p>
-                </div>
-            </div>
-
-            <div class="deploy-note">
-                <strong>⚡ Quick Deployment Cheat Sheet</strong><br>
-                • <strong>Claude/ChatGPT/DeepSeek</strong> → generate HTML → save as index.html → GitHub repo → Settings → Pages (branch: main).<br>
-                • <strong>Custom domain:</strong> Add CNAME file or configure in Pages settings.<br>
-                • <strong>Privacy:</strong> All client-side, no backend required. Perfect for quizzes, portfolios, educational tools.
-            </div>
-
-            <hr>
-            <h3 style="margin: 1rem 0 0.5rem 0;">🎯 Example AI prompts for different features</h3>
-            <div class="code-snip">
-                • "Add a dark mode toggle to the existing quiz app."<br>
-                • "Generate 20 new questions for Chapter 2 using real-world probability scenarios."<br>
-                • "Include a 'show answers' button and a progress bar."<br>
-                • "Write a Python script that converts a CSV of questions into this HTML quiz format."
-            </div>
-            <div class="footer-note">
-                🔗 This very app was built using a combination of AI (Claude + DeepSeek reasoning) and deployed on GitHub Pages. All 100+ questions reflect STAT103 syllabus topics from Dr. Shiju Zhang’s materials.
-            </div>
-        </div>
-    </div>
 </div>
 
 <script>
-    // --------------------------------------------------------------
-    //  Generate 20 unique questions for each chapter (0 through 4)
-    //  using statistical thinking topics from szhang.quarto.pub/stat103
-    //  plus RPubs syllabus context. Realistic & educational.
-    // --------------------------------------------------------------
-    
-    const chaptersData = {
-        0: { name: "Chapter 0: Intro to Statistical Thinking", questions: [] },
-        1: { name: "Chapter 1: Data & Descriptive Statistics", questions: [] },
-        2: { name: "Chapter 2: Probability & Distribution", questions: [] },
-        3: { name: "Chapter 3: Statistical Inference", questions: [] },
-        4: { name: "Chapter 4: Study Design & Data Ethics", questions: [] }
-    };
+/* ============================================================
+   COMPLETE QUIZ LOGIC: 20 REALISTIC QUESTIONS PER CHAPTER
+   Based on STAT103: Statistical Thinking (szhang.quarto.pub)
+   ============================================================ */
 
-    // Helper to build question bank for each chapter
-    function buildChapter0() {
-        return [
-            { text: "What is the primary focus of statistical thinking?", options: ["A) Collecting massive datasets", "B) Understanding variation and making data-driven decisions", "C) Proving mathematical theorems", "D) Surveying entire populations"], correct: 1 },
-            { text: "Which of the following best describes 'population' in statistics?", options: ["A) A subset selected for study", "B) The entire group of interest", "C) Any sample of size > 30", "D) The average value"], correct: 1 },
-            { text: "Statistical thinking emphasizes:", options: ["A) Ignoring randomness", "B) Process improvement and variation reduction", "C) Only p-values", "D) Certainty in conclusions"], correct: 1 },
-            { text: "A parameter is a numerical summary of a:", options: ["A) Sample", "B) Population", "C) Statistic", "D) Variable"], correct: 1 },
-            { text: "Which of the following is a key step in the statistical investigation process?", options: ["A) Formulate question, collect data, analyze, interpret", "B) Only run regression", "C) Report without visualization", "D) Skip data cleaning"], correct: 0 },
-            { text: "What role does context play in statistics?", options: ["A) Minimal role", "B) Critical role - defines how we interpret results", "C) Only for graphs", "D) Only for categorical data"], correct: 1 },
-            { text: "Statistics is the science of:", options: ["A) Certainty", "B) Learning from data", "C) Computer algorithms only", "D) Predicting future without data"], correct: 1 },
-            { text: "Which is an example of descriptive statistics?", options: ["A) Testing a hypothesis about a mean", "B) Computing the average test score of a class", "C) Predicting election outcome using sample", "D) Estimating population parameter"], correct: 1 },
-            { text: "What does 'data variability' refer to?", options: ["A) All data are identical", "B) Differences and spread in observations", "C) Missing data only", "D) Outliers detection algorithm"], correct: 1 },
-            { text: "The course STAT103 emphasizes:", options: ["A) Pure theory without applications", "B) Statistical thinking in real-world contexts", "C) Advanced calculus", "D) Only Bayesian methods"], correct: 1 },
-            { text: "Which statement reflects a statistical question?", options: ["A) What is the height of one person?", "B) What is the typical height of college students and how does it vary?", "C) What color is my shirt?", "D) How many apples in a single basket?"], correct: 1 },
-            { text: "Data can be collected from:", options: ["A) Experiments", "B) Surveys", "C) Observational studies", "D) All of the above"], correct: 3 },
-            { text: "A variable that can take numerical values is called:", options: ["A) Categorical", "B) Quantitative", "C) Ordinal", "D) Nominal"], correct: 1 },
-            { text: "Which is NOT a component of statistical thinking?", options: ["A) Variation", "B) Data production", "C) Absolute certainty", "D) Inference"], correct: 2 },
-            { text: "What does 'EDA' stand for?", options: ["A) Estimated Data Allocation", "B) Exploratory Data Analysis", "C) Empirical Distribution Adjustment", "D) Early Decision Algorithm"], correct: 1 },
-            { text: "A sample is used to make inferences about a:", options: ["A) Statistic", "B) Parameter", "C) Sampling frame", "D) Census"], correct: 1 },
-            { text: "Shiju Zhang's STAT103 syllabus highlights:", options: ["A) Only programming", "B) Data ethics, reproducibility and real-world application", "C) No use of software", "D) Only theoretical probability"], correct: 1 },
-            { text: "Statistical literacy involves:", options: ["A) Critically evaluating statistical claims", "B) Memorizing formulas only", "C) Avoiding graphs", "D) Ignoring sample size"], correct: 0 },
-            { text: "Random sampling helps to:", options: ["A) Increase bias", "B) Reduce bias and allow generalization", "C) Delete outliers", "D) Make data categorical"], correct: 1 },
-            { text: "What is the first step in a statistical study?", options: ["A) Collect data", "B) Ask a research question", "C) Draw conclusions", "D) Clean the dataset"], correct: 1 }
-        ];
-    }
+const chaptersData = {
+  0: [],  // Chapter 0 - Intro to Statistical Thinking
+  1: [],  // Chapter 1 - Data & Descriptive Statistics
+  2: [],  // Chapter 2 - Probability & Distribution
+  3: [],  // Chapter 3 - Statistical Inference
+  4: []   // Chapter 4 - Study Design & Data Ethics
+};
 
-    function buildChapter1() {
-        return [
-            { text: "The mean of a dataset is 50 and median is 45. What can we infer about the distribution?", options: ["Symmetric", "Left-skewed", "Right-skewed", "Uniform"], correct: 2 },
-            { text: "Which graph is best for showing distribution of a continuous variable?", options: ["Bar chart", "Histogram", "Pie chart", "Scatter plot"], correct: 1 },
-            { text: "Interquartile range (IQR) measures:", options: ["Central tendency", "Spread of middle 50%", "Total variability", "Skewness"], correct: 1 },
-            { text: "A standard deviation of zero indicates:", options: ["All values are identical", "High variability", "Data are categorical", "Mean is zero"], correct: 0 },
-            { text: "Which descriptive statistic is affected by every data value?", options: ["Median", "Mode", "Mean", "IQR"], correct: 2 },
-            { text: "Boxplots display which five-number summary?", options: ["Min, Q1, median, Q3, max", "Mean, SD, min, max", "Mode, range, IQR", "Variance, skew, kurtosis"], correct: 0 },
-            { text: "A scatterplot is used to visualize relationship between:", options: ["Two categorical variables", "Two quantitative variables", "One categorical and one quantitative", "Time series only"], correct: 1 },
-            { text: "What does a correlation coefficient of -0.85 indicate?", options: ["Strong positive", "Weak negative", "Strong negative", "No correlation"], correct: 2 },
-            { text: "Which measure of spread is in original data units?", options: ["Variance", "Standard deviation", "Squared deviation", "Coefficient of variation"], correct: 1 },
-            { text: "The shape of a distribution with a long tail on the right is:", options: ["Left-skewed", "Right-skewed", "Symmetric", "Bimodal"], correct: 1 },
-            { text: "Frequency table shows:", options: ["Proportions per category", "Correlation", "Regression line", "Standard error"], correct: 0 },
-            { text: "Which is a resistant measure of spread?", options: ["IQR", "Standard deviation", "Variance", "Range"], correct: 0 },
-            { text: "Ordinal data are:", options: ["Named categories with order", "Quantitative measurements", "Binary data", "Continuous counts"], correct: 0 },
-            { text: "A pie chart is unsuitable when there are:", options: ["Two categories", "Too many categories", "Percentages", "Labels"], correct: 1 },
-            { text: "Descriptive statistics summarize data using:", options: ["Graphs & numerical summaries", "Hypothesis tests", "Confidence intervals", "p-values"], correct: 0 },
-            { text: "What is the range of a dataset?", options: ["Max - Min", "Mean - Median", "Q3 - Q1", "Sum of squares"], correct: 0 },
-            { text: "Which value splits dataset into two equal halves?", options: ["Mean", "Median", "Mode", "Third quartile"], correct: 1 },
-            { text: "A bar chart is appropriate for:", options: ["Categorical data", "Continuous data only", "Time series", "Correlation"], correct: 0 },
-            { text: "Outliers affect which of the following most?", options: ["Median", "Mean", "Mode", "IQR"], correct: 1 },
-            { text: "To compare distributions across groups, best tool:", options: ["Side-by-side boxplots", "Single histogram", "Pie chart", "Line graph"], correct: 0 }
-        ];
-    }
+// Chapter 0: Introduction to Statistical Thinking (20 questions)
+function buildChapter0() {
+  return [
+    { text: "What is the primary focus of statistical thinking?", options: ["A) Collecting massive datasets", "B) Understanding variation and making data-driven decisions", "C) Proving mathematical theorems", "D) Surveying entire populations"], correct: 1 },
+    { text: "Which best describes a 'population' in statistics?", options: ["A) A subset selected for study", "B) The entire group of interest", "C) Any sample of size > 30", "D) The average value"], correct: 1 },
+    { text: "Statistical thinking emphasizes:", options: ["A) Ignoring randomness", "B) Process improvement and variation reduction", "C) Only p-values", "D) Certainty in conclusions"], correct: 1 },
+    { text: "A parameter is a numerical summary of a:", options: ["A) Sample", "B) Population", "C) Statistic", "D) Variable"], correct: 1 },
+    { text: "Which is a key step in the statistical investigation process?", options: ["A) Formulate question, collect data, analyze, interpret", "B) Only run regression", "C) Report without visualization", "D) Skip data cleaning"], correct: 0 },
+    { text: "What role does context play in statistics?", options: ["A) Minimal role", "B) Critical role - defines how we interpret results", "C) Only for graphs", "D) Only for categorical data"], correct: 1 },
+    { text: "Statistics is the science of:", options: ["A) Certainty", "B) Learning from data", "C) Computer algorithms only", "D) Predicting without data"], correct: 1 },
+    { text: "Which is an example of descriptive statistics?", options: ["A) Testing a hypothesis", "B) Computing the average test score", "C) Predicting election outcome", "D) Estimating a parameter"], correct: 1 },
+    { text: "What does 'data variability' refer to?", options: ["A) All data identical", "B) Differences and spread in observations", "C) Missing data only", "D) Outlier detection"], correct: 1 },
+    { text: "The course STAT103 emphasizes:", options: ["A) Pure theory", "B) Statistical thinking in real-world contexts", "C) Advanced calculus", "D) Only Bayesian methods"], correct: 1 },
+    { text: "Which is a statistical question?", options: ["A) Height of one person", "B) Typical height of college students and its variation", "C) Color of my shirt", "D) Apples in one basket"], correct: 1 },
+    { text: "Data can be collected from:", options: ["A) Experiments", "B) Surveys", "C) Observational studies", "D) All of the above"], correct: 3 },
+    { text: "A quantitative variable takes:", options: ["A) Category labels", "B) Numerical values", "C) Only binary values", "D) Text responses"], correct: 1 },
+    { text: "Which is NOT a component of statistical thinking?", options: ["A) Variation", "B) Data production", "C) Absolute certainty", "D) Inference"], correct: 2 },
+    { text: "What does 'EDA' stand for?", options: ["A) Estimated Data Allocation", "B) Exploratory Data Analysis", "C) Empirical Distribution Adjustment", "D) Early Decision Algorithm"], correct: 1 },
+    { text: "A sample is used to make inferences about a:", options: ["A) Statistic", "B) Parameter", "C) Sampling frame", "D) Census"], correct: 1 },
+    { text: "Statistical literacy involves:", options: ["A) Critically evaluating claims", "B) Memorizing formulas only", "C) Avoiding graphs", "D) Ignoring sample size"], correct: 0 },
+    { text: "Random sampling helps to:", options: ["A) Increase bias", "B) Reduce bias and allow generalization", "C) Delete outliers", "D) Make data categorical"], correct: 1 },
+    { text: "First step in a statistical study:", options: ["A) Collect data", "B) Ask a research question", "C) Draw conclusions", "D) Clean dataset"], correct: 1 },
+    { text: "Which is a goal of statistical thinking?", options: ["A) Make better decisions under uncertainty", "B) Eliminate all variability", "C) Prove causation without data", "D) Avoid using samples"], correct: 0 }
+  ];
+}
 
-    function buildChapter2() {
-        let q = [];
-        q.push({ text: "The probability of an impossible event is:", options: ["0", "1", "0.5", "Undefined"], correct: 0 });
-        q.push({ text: "If two events are mutually exclusive, P(A∪B) equals:", options: ["P(A)+P(B)", "P(A)P(B)", "P(A)+P(B)-P(A∩B)", "0"], correct: 0 });
-        q.push({ text: "Which distribution models number of successes in fixed trials?", options: ["Normal", "Binomial", "Poisson", "Exponential"], correct: 1 });
-        q.push({ text: "Standard Normal distribution has mean ___ and variance ___", options: ["0, 1", "1, 0", "0, 0", "1, 1"], correct: 0 });
-        q.push({ text: "Empirical Rule states ~95% within __ SD of mean", options: ["1", "2", "3", "1.96"], correct: 1 });
-        q.push({ text: "If P(A)=0.6 and P(B)=0.5 and independent, P(A|B)=", options: ["0.6", "0.5", "0.3", "0.83"], correct: 0 });
-        q.push({ text: "Central Limit Theorem applies to:", options: ["Sampling distribution of sample mean", "Population distribution only", "Categorical variables", "Small samples"], correct: 0 });
-        q.push({ text: "A random variable that can take countable values is:", options: ["Continuous", "Discrete", "Ordinal", "Nominal"], correct: 1 });
-        q.push({ text: "The expected value of a fair six-sided die roll is:", options: ["3", "3.5", "4", "2.5"], correct: 1 });
-        q.push({ text: "Law of Large Numbers states:", options: ["Sample mean approaches population mean as n increases", "Variance goes to infinity", "Probability always 0.5", "Outliers disappear"], correct: 0 });
-        q.push({ text: "If Z-score = 2, data point is:", options: ["Below mean", "Two SD above mean", "Two SD below mean", "Exactly median"], correct: 1 });
-        q.push({ text: "Probability of complement event is:", options: ["1 - P(A)", "P(A)-1", "0", "P(A)"], correct: 0 });
-        q.push({ text: "Which is not a property of probability?", options: ["Between 0 and 1", "Sum over all outcomes = 1", "Can be negative", "Mutually exclusive addition rule"], correct: 2 });
-        q.push({ text: "Bayes' Theorem is used for:", options: ["Updating probabilities with evidence", "Finding mean", "Describing variation", "Correlation"], correct: 0 });
-        q.push({ text: "A discrete uniform distribution example:", options: ["Rolling a fair die", "Heights of people", "Time between arrivals", "Stock returns"], correct: 0 });
-        q.push({ text: "Poisson distribution models:", options: ["Number of events in fixed interval", "Binomial trials", "Normal approximation", "Continuous waiting time"], correct: 0 });
-        q.push({ text: "Which parameter defines normal curve shape?", options: ["Mean and SD", "Degrees of freedom", "Shape parameter only", "Lambda"], correct: 0 });
-        q.push({ text: "P(A|B) = P(A∩B)/P(B) is definition of:", options: ["Conditional probability", "Marginal probability", "Joint probability", "Bayes rule"], correct: 0 });
-        q.push({ text: "Randomness means:", options: ["Unpredictable in short term but regular pattern long term", "Complete chaos", "No patterns ever", "Deterministic"], correct: 0 });
-        q.push({ text: "Which graph shows theoretical probability distribution?", options: ["Probability histogram", "Bar chart of raw data", "Scatterplot", "Time series"], correct: 0 });
-        return q.slice(0,20);
-    }
-    
-    function buildChapter3() {
-        let arr = [];
-        arr.push({ text: "The p-value is the probability of observing data as extreme as, or more, given:", options: ["Alternative hypothesis true", "Null hypothesis true", "Sample is biased", "Effect size"], correct: 1 });
-        arr.push({ text: "If p-value < alpha, we:", options: ["Reject H0", "Fail to reject H0", "Accept H0", "Redo experiment"], correct: 0 });
-        arr.push({ text: "A Type I error occurs when:", options: ["Reject true null", "Fail to reject false null", "Correct decision", "Sample is too small"], correct: 0 });
-        arr.push({ text: "Confidence level increases → margin of error:", options: ["Increases", "Decreases", "Stays same", "Becomes zero"], correct: 0 });
-        arr.push({ text: "Which distribution is used for small sample inference about mean?", options: ["t-distribution", "Normal", "F-distribution", "Chi-square"], correct: 0 });
-        arr.push({ text: "Null hypothesis typically expresses:", options: ["No effect or difference", "Research claim", "Large effect", "Alternative claim"], correct: 0 });
-        arr.push({ text: "Statistical significance does NOT imply:", options: ["Practical importance", "Small p-value", "Reject H0", "Evidence against null"], correct: 0 });
-        arr.push({ text: "A confidence interval is narrower when:", options: ["Larger sample size", "Smaller sample", "Higher confidence level", "More variability"], correct: 0 });
-        arr.push({ text: "Power of a test = probability of:", options: ["Reject false null", "Accept true null", "Type I error", "Type II error"], correct: 0 });
-        arr.push({ text: "The standard error of the mean equals:", options: ["σ/√n", "σ * √n", "s²/n", "√(p(1-p))"], correct: 0 });
-        arr.push({ text: "Which test compares means of two independent groups?", options: ["Two-sample t-test", "Chi-square", "ANOVA", "Paired t-test"], correct: 0 });
-        arr.push({ text: "If 95% CI for difference in means includes 0, then:", options: ["No significant difference at α=0.05", "Significant difference", "p-value < 0.05", "Effect large"], correct: 0 });
-        arr.push({ text: "Hypothesis test for proportion uses which distribution?", options: ["Normal approx (z-test)", "t-test", "F-test", "Binomial exact"], correct: 0 });
-        arr.push({ text: "α (alpha) is probability of:", options: ["Type I error", "Type II error", "Power", "Confidence level"], correct: 0 });
-        arr.push({ text: "Effect size measures:", options: ["Magnitude of difference", "p-value strength", "Sample size", "Significance level"], correct: 0 });
-        arr.push({ text: "Increasing sample size has what effect on hypothesis test?", options: ["Increases power", "Decreases power", "Increases Type I error", "No effect"], correct: 0 });
-        arr.push({ text: "A one-sided test has:", options: ["Alternative in one direction", "Two critical regions", "Higher type I error", "Always more powerful"], correct: 0 });
-        arr.push({ text: "Bootstrap is used for:", options: ["Estimating sampling distribution without normality assumption", "Collecting more data", "Cleaning missing data", "Reducing bias"], correct: 0 });
-        arr.push({ text: "A 95% confidence interval means:", options: ["Contains population parameter in 95% of samples", "Probability parameter inside is 0.95", "Sample mean is fixed", "Margin of error zero"], correct: 0 });
-        arr.push({ text: "Which condition is required for a z-test?", options: ["Randomization", "Normal population or n≥30", "Independence", "All of the above"], correct: 3 });
-        return arr;
-    }
-    
-    function buildChapter4() {
-        return [
-            { text: "What is a key principle of ethical data practice?", options: ["Respect for persons", "Beneficence", "Justice", "All of the above"], correct: 3 },
-            { text: "Randomized Controlled Trial (RCT) helps reduce:", options: ["Bias", "Sample size", "Cost", "Measurement error"], correct: 0 },
-            { text: "Confounding variable is:", options: ["Associated with both exposure and outcome", "The main treatment", "Random error", "Outcome only"], correct: 0 },
-            { text: "Observational study vs experiment: difference is:", options: ["Assignment of treatment", "Sample size", "Number of variables", "Statistical power"], correct: 0 },
-            { text: "Which study design is best for causality?", options: ["Randomized experiment", "Case-control", "Cross-sectional", "Cohort study"], correct: 0 },
-            { text: "Data anonymization aims to:", options: ["Protect participant identity", "Increase accuracy", "Speed analysis", "Reduce outliers"], correct: 0 },
-            { text: "IRB stands for:", options: ["Institutional Review Board", "Internal Regression Board", "Independent Research Bureau", "Integrity of Research Body"], correct: 0 },
-            { text: "HARKing is problematic because:", options: ["Hypothesizing after results known inflates false positives", "It's always ethical", "Improves power", "It reduces p-value"], correct: 0 },
-            { text: "Selection bias occurs when:", options: ["Sample not representative of population", "Measurement error", "Data entry mistakes", "Large variance"], correct: 0 },
-            { text: "Placebo effect is controlled by:", options: ["Blinding", "Randomization", "Large sample", "Double blinding"], correct: 0 },
-            { text: "In a double-blind study, who is unaware of treatment?", options: ["Both participants and researchers", "Only participants", "Only data analyst", "Sponsor"], correct: 0 },
-            { text: "P-hacking involves:", options: ["Repeated testing to get significant results", "Correcting for multiple comparisons", "Large effect sizes", "Pre-registration"], correct: 0 },
-            { text: "What is a 'conflict of interest' in research?", options: ["Financial or personal interest that could bias results", "Always illegal", "Encouraged in science", "Only applies to medicine"], correct: 0 },
-            { text: "Replication crisis relates to:", options: ["Difficulty reproducing published results", "Lack of new topics", "Too many statisticians", "Small p-values only"], correct: 0 },
-            { text: "Reproducible research includes:", options: ["Sharing data and code", "Only final report", "No need methodology", "Keeping data secret"], correct: 0 },
-            { text: "Which is NOT a principle of ethical study design?", options: ["Minimize harm", "Maximize benefits", "Coercion allowed", "Respect autonomy"], correct: 2 },
-            { text: "Block randomization helps:", options: ["Balance confounders across groups", "Increase bias", "Reduce blinding", "Increase p-value"], correct: 0 },
-            { text: "Informed consent must be:", options: ["Voluntary, understandable, and documented", "Given only if payment large", "Signed after study completion", "Not required for surveys"], correct: 0 },
-            { text: "What is a key goal of data ethics mentioned in STAT103?", options: ["Fairness, transparency, accountability", "Faster conclusions", "Cheap analysis", "Proprietary data"], correct: 0 },
-            { text: "A quasi-experiment lacks:", options: ["Random assignment", "Control group", "Measurement", "Variables"], correct: 0 }
-        ];
-    }
-    
-    chaptersData[0].questions = buildChapter0();
-    chaptersData[1].questions = buildChapter1();
-    chaptersData[2].questions = buildChapter2();
-    chaptersData[3].questions = buildChapter3();
-    chaptersData[4].questions = buildChapter4();
-    
-    let currentChapter = "0";
-    let userSelections = {};
-    
-    function escapeHtml(str) { return String(str).replace(/[&<>]/g, function(m){if(m==='&') return '&amp;'; if(m==='<') return '&lt;'; if(m==='>') return '&gt;'; return m;});}
-    
-    function renderQuiz() {
-        const container = document.getElementById("questionsContainer");
-        const questions = chaptersData[currentChapter].questions;
-        if(!questions) return;
-        let html = "";
-        questions.forEach((q, idx) => {
-            const selectedVal = (userSelections[currentChapter] && userSelections[currentChapter][idx] !== undefined) ? userSelections[currentChapter][idx] : null;
-            html += `<div class="question-card" data-qidx="${idx}">
-                        <div class="q-num">Question ${idx+1}/20</div>
-                        <div class="question-text">${escapeHtml(q.text)}</div>
-                        <div class="options">`;
-            q.options.forEach((opt, optIdx) => {
-                const checkedAttr = (selectedVal === optIdx) ? 'checked' : '';
-                html += `<div class="option">
-                            <input type="radio" name="q${idx}" value="${optIdx}" id="q${idx}_opt${optIdx}" ${checkedAttr}>
-                            <label for="q${idx}_opt${optIdx}">${escapeHtml(opt)}</label>
-                         </div>`;
-            });
-            html += `</div><div class="feedback" id="fb_q${idx}"></div></div>`;
-        });
-        container.innerHTML = html;
-        for(let i=0;i<questions.length;i++) {
-            const radios = document.querySelectorAll(`input[name="q${i}"]`);
-            radios.forEach(radio => {
-                radio.addEventListener('change', (e) => {
-                    if(!userSelections[currentChapter]) userSelections[currentChapter] = {};
-                    userSelections[currentChapter][i] = parseInt(e.target.value);
-                    const fbDiv = document.getElementById(`fb_q${i}`);
-                    if(fbDiv) fbDiv.innerHTML = "";
-                });
-            });
-        }
-        updateScoreDisplay(false);
-    }
-    
-    function checkAnswers() {
-        const questions = chaptersData[currentChapter].questions;
-        let correctCount = 0;
-        const selections = userSelections[currentChapter] || {};
-        for(let i=0;i<questions.length;i++) {
-            const fbDiv = document.getElementById(`fb_q${i}`);
-            const selected = selections[i];
-            const isCorrect = (selected !== undefined && selected === questions[i].correct);
-            if(isCorrect) correctCount++;
-            let feedbackMsg = "";
-            if(selected === undefined) feedbackMsg = "❓ Not answered";
-            else if(isCorrect) feedbackMsg = "✅ Correct!";
-            else feedbackMsg = `❌ Wrong. Correct answer: ${questions[i].options[questions[i].correct]}`;
-            if(fbDiv) {
-                fbDiv.innerHTML = feedbackMsg;
-                fbDiv.className = `feedback ${(selected !== undefined && isCorrect) ? 'correct' : (selected !== undefined ? 'wrong' : '')}`;
-            }
-        }
-        document.getElementById("scoreDisplay").innerHTML = `Score: ${correctCount}/${questions.length}`;
-    }
-    
-    function updateScoreDisplay(showOnly = false) {
-        if(!showOnly) {
-            const questions = chaptersData[currentChapter].questions;
-            const selections = userSelections[currentChapter] || {};
-            let answered = 0;
-            for(let i=0;i<questions.length;i++) if(selections[i] !== undefined) answered++;
-            document.getElementById("scoreDisplay").innerHTML = `Answered: ${answered}/${questions.length} (click "Check answers")`;
-        }
-    }
-    
-    function resetCurrentQuiz() {
-        if(userSelections[currentChapter]) delete userSelections[currentChapter];
-        renderQuiz();
-        document.getElementById("scoreDisplay").innerHTML = `Score: --/20`;
-    }
-    
-    // Event listeners for quiz controls
-    document.getElementById("chapterSelect")?.addEventListener("change", (e) => {
-        currentChapter = e.target.value;
-        renderQuiz();
+// Chapter 1: Data & Descriptive Statistics (20 questions)
+function buildChapter1() {
+  return [
+    { text: "Mean is 50, median 45. Distribution is:", options: ["Symmetric", "Left-skewed", "Right-skewed", "Uniform"], correct: 2 },
+    { text: "Best graph for continuous variable distribution?", options: ["Bar chart", "Histogram", "Pie chart", "Scatter plot"], correct: 1 },
+    { text: "IQR measures:", options: ["Central tendency", "Spread of middle 50%", "Total variability", "Skewness"], correct: 1 },
+    { text: "Standard deviation of zero indicates:", options: ["All values identical", "High variability", "Data categorical", "Mean zero"], correct: 0 },
+    { text: "Which statistic is affected by every value?", options: ["Median", "Mode", "Mean", "IQR"], correct: 2 },
+    { text: "Boxplot shows which five-number summary?", options: ["Min, Q1, median, Q3, max", "Mean, SD, min, max", "Mode, range, IQR", "Variance, skew"], correct: 0 },
+    { text: "Scatterplot shows relationship between:", options: ["Two categorical", "Two quantitative", "One categorical, one quantitative", "Time series"], correct: 1 },
+    { text: "Correlation -0.85 indicates:", options: ["Strong positive", "Weak negative", "Strong negative", "No correlation"], correct: 2 },
+    { text: "Spread measure in original units:", options: ["Variance", "Standard deviation", "Squared deviation", "CV"], correct: 1 },
+    { text: "Long right tail = ?", options: ["Left-skewed", "Right-skewed", "Symmetric", "Bimodal"], correct: 1 },
+    { text: "Frequency table shows:", options: ["Proportions per category", "Correlation", "Regression", "Standard error"], correct: 0 },
+    { text: "Resistant measure of spread:", options: ["IQR", "Standard deviation", "Variance", "Range"], correct: 0 },
+    { text: "Ordinal data are:", options: ["Ordered categories", "Quantitative measurements", "Binary", "Continuous counts"], correct: 0 },
+    { text: "Pie chart unsuitable when:", options: ["Two categories", "Too many categories", "Percentages shown", "Labels present"], correct: 1 },
+    { text: "Descriptive statistics include:", options: ["Graphs & summaries", "Hypothesis tests", "Confidence intervals", "p-values"], correct: 0 },
+    { text: "Range = ?", options: ["Max - Min", "Mean - Median", "Q3 - Q1", "Sum of squares"], correct: 0 },
+    { text: "Which splits data into two equal halves?", options: ["Mean", "Median", "Mode", "Q3"], correct: 1 },
+    { text: "Bar chart appropriate for:", options: ["Categorical data", "Continuous data", "Time series", "Correlation"], correct: 0 },
+    { text: "Outliers affect which most?", options: ["Median", "Mean", "Mode", "IQR"], correct: 1 },
+    { text: "Compare distributions across groups best with:", options: ["Side-by-side boxplots", "Single histogram", "Pie chart", "Line graph"], correct: 0 }
+  ];
+}
+
+// Chapter 2: Probability & Distributions (20 questions)
+function buildChapter2() {
+  return [
+    { text: "Probability of impossible event?", options: ["0", "1", "0.5", "-1"], correct: 0 },
+    { text: "Mutually exclusive: P(A∪B) = ?", options: ["P(A)+P(B)", "P(A)P(B)", "P(A)+P(B)-P(A∩B)", "0"], correct: 0 },
+    { text: "Binomial distribution models:", options: ["Number of successes in fixed trials", "Normal data", "Time between events", "Continuous outcomes"], correct: 0 },
+    { text: "Standard Normal mean & variance:", options: ["0, 1", "1, 0", "0, 0", "1, 1"], correct: 0 },
+    { text: "Empirical Rule: 95% within __ SD", options: ["1", "2", "3", "1.96"], correct: 1 },
+    { text: "If independent, P(A|B) = ?", options: ["P(A)", "P(B)", "P(A∩B)", "0"], correct: 0 },
+    { text: "CLT applies to:", options: ["Sampling distribution of mean", "Population distribution", "Categorical variables", "Small samples only"], correct: 0 },
+    { text: "Discrete random variable example:", options: ["Die roll outcome", "Height", "Temperature", "Time"], correct: 0 },
+    { text: "Expected value of fair die:", options: ["3", "3.5", "4", "2.5"], correct: 1 },
+    { text: "Law of Large Numbers says:", options: ["Sample mean → population mean", "Variance → infinity", "Probability = 0.5", "Outliers disappear"], correct: 0 },
+    { text: "Z-score = 2 means:", options: ["Below mean", "2 SD above mean", "2 SD below mean", "At median"], correct: 1 },
+    { text: "Complement rule: P(A') = ?", options: ["1 - P(A)", "P(A)-1", "0", "P(A)"], correct: 0 },
+    { text: "Which is NOT a probability property?", options: ["Between 0 and 1", "Sum over outcomes = 1", "Can be negative", "Addition rule"], correct: 2 },
+    { text: "Bayes' Theorem used for:", options: ["Updating probabilities with evidence", "Finding mean", "Describing variation", "Correlation"], correct: 0 },
+    { text: "Uniform discrete example:", options: ["Fair die", "Heights", "Stock returns", "Wait times"], correct: 0 },
+    { text: "Poisson models:", options: ["Number of events in interval", "Binomial trials", "Normal approx", "Continuous waiting"], correct: 0 },
+    { text: "Normal curve shape determined by:", options: ["Mean and SD", "Degrees of freedom", "Lambda", "Shape only"], correct: 0 },
+    { text: "Conditional probability definition:", options: ["P(A|B)=P(A∩B)/P(B)", "P(A)+P(B)", "P(A)P(B)", "P(A∪B)"], correct: 0 },
+    { text: "Randomness means:", options: ["Short-term unpredictable, long-term pattern", "Complete chaos", "Deterministic", "No patterns"], correct: 0 },
+    { text: "Probability histogram shows:", options: ["Theoretical distribution", "Raw data", "Scatterplot", "Time series"], correct: 0 }
+  ];
+}
+
+// Chapter 3: Statistical Inference (20 questions)
+function buildChapter3() {
+  return [
+    { text: "p-value is probability under:", options: ["Null hypothesis", "Alternative hypothesis", "Bias", "Large n"], correct: 0 },
+    { text: "p-value < α → ?", options: ["Reject H0", "Fail to reject H0", "Accept H0", "Redo test"], correct: 0 },
+    { text: "Type I error: ?", options: ["Reject true null", "Fail to reject false null", "Correct decision", "Small sample"], correct: 0 },
+    { text: "Higher confidence level → margin of error:", options: ["Increases", "Decreases", "Stays same", "Zero"], correct: 0 },
+    { text: "Small sample inference for mean uses:", options: ["t-distribution", "Normal", "F", "Chi-square"], correct: 0 },
+    { text: "Null hypothesis typically expresses:", options: ["No effect", "Research claim", "Large effect", "Alternative"], correct: 0 },
+    { text: "Statistical significance ≠", options: ["Practical importance", "Small p-value", "Reject H0", "Evidence against null"], correct: 0 },
+    { text: "Narrower CI comes from:", options: ["Larger sample size", "Smaller sample", "Higher confidence", "More variability"], correct: 0 },
+    { text: "Power = P(?)", options: ["Reject false null", "Accept true null", "Type I error", "Type II error"], correct: 0 },
+    { text: "Standard error of mean = ?", options: ["σ/√n", "σ√n", "s²/n", "√(p(1-p))"], correct: 0 },
+    { text: "Two-group mean comparison test:", options: ["Two-sample t-test", "Chi-square", "ANOVA", "Paired t"], correct: 0 },
+    { text: "CI includes 0 → ?", options: ["No significant difference", "Significant difference", "p<0.05", "Large effect"], correct: 0 },
+    { text: "Proportion test uses:", options: ["Normal approx", "t-test", "F-test", "Binomial exact"], correct: 0 },
+    { text: "α is probability of:", options: ["Type I error", "Type II error", "Power", "Confidence"], correct: 0 },
+    { text: "Effect size measures:", options: ["Magnitude of difference", "p-value", "Sample size", "Significance"], correct: 0 },
+    { text: "Larger n → effect on power?", options: ["Increases power", "Decreases power", "Increases Type I", "No effect"], correct: 0 },
+    { text: "One-sided test has:", options: ["Alternative in one direction", "Two critical regions", "Higher Type I", "Always powerful"], correct: 0 },
+    { text: "Bootstrap estimates:", options: ["Sampling distribution without normality", "More data", "Missing cleaning", "Bias reduction"], correct: 0 },
+    { text: "95% CI means:", options: ["Contains parameter in 95% of samples", "Probability parameter inside = 0.95", "Sample mean fixed", "Margin zero"], correct: 0 },
+    { text: "Valid inference requires:", options: ["Randomization & independence", "Large data only", "No outliers", "Normal population"], correct: 0 }
+  ];
+}
+
+// Chapter 4: Study Design & Data Ethics (20 questions)
+function buildChapter4() {
+  return [
+    { text: "Key ethical principle?", options: ["Respect, beneficence, justice", "Speed", "Cost reduction", "Maximum sample"], correct: 0 },
+    { text: "RCT reduces:", options: ["Bias", "Sample size", "Cost", "Measurement error"], correct: 0 },
+    { text: "Confounding variable:", options: ["Associated with exposure and outcome", "Treatment", "Random error", "Outcome only"], correct: 0 },
+    { text: "Experiment vs observational difference:", options: ["Treatment assignment", "Sample size", "# variables", "Statistical power"], correct: 0 },
+    { text: "Best for causality:", options: ["Randomized experiment", "Case-control", "Cross-sectional", "Cohort"], correct: 0 },
+    { text: "Anonymization protects:", options: ["Participant identity", "Accuracy", "Speed", "Outliers"], correct: 0 },
+    { text: "IRB stands for:", options: ["Institutional Review Board", "Internal Regression", "Independent Research", "Integrity Board"], correct: 0 },
+    { text: "HARKing is problematic because:", options: ["Inflates false positives", "Always ethical", "Improves power", "Reduces p-value"], correct: 0 },
+    { text: "Selection bias happens when:", options: ["Sample not representative", "Measurement error", "Data entry mistake", "Large variance"], correct: 0 },
+    { text: "Placebo effect controlled by:", options: ["Blinding", "Randomization", "Large sample", "Double blinding"], correct: 0 },
+    { text: "Double-blind means:", options: ["Both participants & researchers unaware", "Only participants", "Only analyst", "Sponsor"], correct: 0 },
+    { text: "P-hacking involves:", options: ["Repeated testing for significance", "Correcting comparisons", "Large effects", "Pre-registration"], correct: 0 },
+    { text: "Conflict of interest:", options: ["Could bias results", "Always illegal", "Encouraged", "Only medicine"], correct: 0 },
+    { text: "Replication crisis refers to:", options: ["Difficulty reproducing results", "Lack of topics", "Too many statisticians", "Small p-values"], correct: 0 },
+    { text: "Reproducible research includes:", options: ["Sharing data & code", "Only final report", "No methodology", "Secret data"], correct: 0 },
+    { text: "Not an ethical principle?", options: ["Coercion allowed", "Minimize harm", "Maximize benefits", "Respect"], correct: 0 },
+    { text: "Block randomization balances:", options: ["Confounders", "Bias", "Blinding", "p-values"], correct: 0 },
+    { text: "Informed consent must be:", options: ["Voluntary & documented", "After study", "Paid", "Not required"], correct: 0 },
+    { text: "Data ethics includes:", options: ["Fairness, transparency", "Fast conclusions", "Cheap analysis", "Proprietary data"], correct: 0 },
+    { text: "Quasi-experiment lacks:", options: ["Random assignment", "Control group", "Measurement", "Variables"], correct: 0 }
+  ];
+}
+
+// Assign all questions
+chaptersData[0] = buildChapter0();
+chaptersData[1] = buildChapter1();
+chaptersData[2] = buildChapter2();
+chaptersData[3] = buildChapter3();
+chaptersData[4] = buildChapter4();
+
+let currentChapter = "0";
+let userSelections = {};
+
+function renderQuiz() {
+  const questions = chaptersData[currentChapter];
+  if (!questions) return;
+  const container = document.getElementById("questionsContainer");
+  container.innerHTML = "";
+  questions.forEach((q, idx) => {
+    const saved = (userSelections[currentChapter] && userSelections[currentChapter][idx] !== undefined) ? userSelections[currentChapter][idx] : null;
+    let optionsHtml = "";
+    q.options.forEach((opt, optIdx) => {
+      const checked = (saved === optIdx) ? 'checked' : '';
+      optionsHtml += `<label class="option">
+        <input type="radio" name="q${idx}" value="${optIdx}" ${checked}>
+        ${opt}
+      </label>`;
     });
-    document.getElementById("checkAnswersBtn")?.addEventListener("click", checkAnswers);
-    document.getElementById("resetQuizBtn")?.addEventListener("click", resetCurrentQuiz);
-    
-    // Tab switching logic
-    const tabBtns = document.querySelectorAll('.tab-btn');
-    const panes = document.querySelectorAll('.tab-pane');
-    tabBtns.forEach(btn => {
-        btn.addEventListener('click', () => {
-            const targetId = btn.getAttribute('data-tab');
-            tabBtns.forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-            panes.forEach(pane => pane.classList.remove('active-pane'));
-            document.getElementById(targetId).classList.add('active-pane');
-        });
+    container.innerHTML += `
+      <div class="question-card">
+        <div class="q-num">Question ${idx+1}/20</div>
+        <div class="question-text">${escapeHtml(q.text)}</div>
+        <div class="options">${optionsHtml}</div>
+        <div class="feedback" id="fb${idx}"></div>
+      </div>`;
+  });
+  // attach change listeners
+  for (let i = 0; i < questions.length; i++) {
+    const radios = document.querySelectorAll(`input[name="q${i}"]`);
+    radios.forEach(radio => {
+      radio.addEventListener('change', (e) => {
+        if (!userSelections[currentChapter]) userSelections[currentChapter] = {};
+        userSelections[currentChapter][i] = parseInt(e.target.value);
+        const fb = document.getElementById(`fb${i}`);
+        if (fb) fb.innerHTML = "";
+      });
     });
-    
-    renderQuiz();
+  }
+}
+
+function escapeHtml(str) {
+  return String(str).replace(/[&<>]/g, function(m) {
+    if (m === '&') return '&amp;';
+    if (m === '<') return '&lt;';
+    if (m === '>') return '&gt;';
+    return m;
+  });
+}
+
+function checkAnswers() {
+  const questions = chaptersData[currentChapter];
+  let correct = 0;
+  const selections = userSelections[currentChapter] || {};
+  for (let i = 0; i < questions.length; i++) {
+    const fb = document.getElementById(`fb${i}`);
+    const selected = selections[i];
+    const isCorrect = (selected !== undefined && selected === questions[i].correct);
+    if (isCorrect) correct++;
+    let msg = "";
+    if (selected === undefined) msg = "❓ Not answered";
+    else if (isCorrect) msg = "✅ Correct!";
+    else msg = `❌ Wrong. Correct: ${questions[i].options[questions[i].correct]}`;
+    if (fb) {
+      fb.innerHTML = msg;
+      fb.className = `feedback ${(selected !== undefined && isCorrect) ? 'correct' : (selected !== undefined ? 'wrong' : '')}`;
+    }
+  }
+  document.getElementById("scoreDisplay").innerHTML = `Score: ${correct}/${questions.length}`;
+}
+
+function resetQuiz() {
+  if (userSelections[currentChapter]) delete userSelections[currentChapter];
+  renderQuiz();
+  document.getElementById("scoreDisplay").innerHTML = "Score: --/20";
+}
+
+// Event listeners
+document.getElementById("chapterSelect").addEventListener("change", (e) => {
+  currentChapter = e.target.value;
+  renderQuiz();
+});
+document.getElementById("checkAnswersBtn").addEventListener("click", checkAnswers);
+document.getElementById("resetQuizBtn").addEventListener("click", resetQuiz);
+
+// Tab switching
+document.querySelectorAll(".tab-btn").forEach(btn => {
+  btn.addEventListener("click", () => {
+    document.querySelectorAll(".tab-btn").forEach(b => b.classList.remove("active"));
+    document.querySelectorAll(".tab-pane").forEach(p => p.classList.remove("active-pane"));
+    btn.classList.add("active");
+    document.getElementById(btn.dataset.tab).classList.add("active-pane");
+  });
+});
+
+// Initialize
+renderQuiz();
 </script>
+
 </body>
 </html>
