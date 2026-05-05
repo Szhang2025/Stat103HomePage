@@ -12,19 +12,20 @@
         .hero h1 { font-size: 2.6rem; background: linear-gradient(135deg, #0b3b4f, #2c7da0); -webkit-background-clip: text; background-clip: text; color: transparent; }
         .hero p { color: #2c5a6e; font-weight: 500; margin-top: 0.5rem; }
         
-        /* Big Picture Logo / Flowchart Image */
+        /* Big Picture Logo / Image */
         .big-picture-logo {
             background: white;
             border-radius: 2rem;
-            padding: 1.5rem;
+            padding: 1rem;
             margin-bottom: 2rem;
             box-shadow: 0 8px 20px rgba(0,0,0,0.08);
             border: 1px solid #cde3ed;
+            text-align: center;
         }
-        .big-picture-logo svg {
-            width: 100%;
+        .big-picture-logo img {
+            max-width: 100%;
             height: auto;
-            max-width: 1000px;
+            border-radius: 1rem;
             display: block;
             margin: 0 auto;
         }
@@ -83,105 +84,10 @@
 </head>
 <body>
 <div class="app-container">
-    <!-- Big Picture Logo / Flowchart Image -->
+    <!-- Big Picture Logo / Uploaded Image -->
     <div class="big-picture-logo">
-        <svg viewBox="0 0 1000 580" xmlns="http://www.w3.org/2000/svg">
-            <defs>
-                <linearGradient id="headerGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-                    <stop offset="0%" style="stop-color:#0b3b4f;stop-opacity:1" />
-                    <stop offset="100%" style="stop-color:#2c7da0;stop-opacity:1" />
-                </linearGradient>
-                <linearGradient id="boxGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-                    <stop offset="0%" style="stop-color:#f4fafd;stop-opacity:1" />
-                    <stop offset="100%" style="stop-color:#e3f0f5;stop-opacity:1" />
-                </linearGradient>
-            </defs>
-            
-            <!-- Title -->
-            <rect x="250" y="10" width="500" height="50" rx="25" fill="url(#headerGrad)" />
-            <text x="500" y="42" fill="white" font-size="20" font-weight="bold" text-anchor="middle" font-family="Inter, sans-serif">📊 THE BIG PICTURE OF STATISTICS</text>
-            
-            <!-- POPULATION Box -->
-            <rect x="350" y="80" width="300" height="60" rx="12" fill="#1f6e8c" />
-            <text x="500" y="108" fill="white" font-size="22" font-weight="bold" text-anchor="middle" font-family="Inter, sans-serif">POPULATION</text>
-            <text x="500" y="128" fill="#d0e8f0" font-size="13" text-anchor="middle" font-family="Inter, sans-serif">What is the truth about the whole group?</text>
-            
-            <!-- PARAMETERS Box -->
-            <rect x="350" y="155" width="300" height="45" rx="10" fill="url(#boxGrad)" stroke="#2c7da0" stroke-width="2" />
-            <text x="500" y="175" fill="#0b3b4f" font-size="15" font-weight="bold" text-anchor="middle" font-family="Inter, sans-serif">PARAMETERS</text>
-            <text x="500" y="192" fill="#2c5a6e" font-size="12" text-anchor="middle" font-family="Inter, sans-serif">(Unknown True Values: Mean μ, Proportion p)</text>
-            
-            <!-- Down arrow from PARAMETERS -->
-            <line x1="500" y1="200" x2="500" y2="230" stroke="#2c7da0" stroke-width="2" marker-end="url(#arrowDown)" />
-            <defs><marker id="arrowDown" markerWidth="10" markerHeight="10" refX="5" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 Z" fill="#2c7da0"/></marker></defs>
-            
-            <!-- DATA GATHERING Box -->
-            <rect x="150" y="235" width="700" height="40" rx="10" fill="#5f8b9c" />
-            <text x="500" y="260" fill="white" font-size="16" font-weight="bold" text-anchor="middle" font-family="Inter, sans-serif">📋 1. DATA GATHERING</text>
-            
-            <!-- Statistical Inference Box -->
-            <rect x="100" y="290" width="800" height="55" rx="10" fill="#2c7da0" />
-            <text x="500" y="312" fill="white" font-size="16" font-weight="bold" text-anchor="middle" font-family="Inter, sans-serif">📊 2. STATISTICAL INFERENCE</text>
-            <text x="500" y="334" fill="#d0e8f0" font-size="12" text-anchor="middle" font-family="Inter, sans-serif">Using sample results to make predictions about the entire population (with uncertainty!)</text>
-            
-            <!-- Three branches under Statistical Inference -->
-            <!-- Branch 1: Hypothesis Testing -->
-            <line x1="500" y1="345" x2="500" y2="370" stroke="#2c7da0" stroke-width="2" />
-            <rect x="100" y="375" width="240" height="50" rx="10" fill="white" stroke="#2c7da0" stroke-width="2" />
-            <text x="220" y="395" fill="#0b3b4f" font-size="14" font-weight="bold" text-anchor="middle" font-family="Inter, sans-serif">🔬 Hypothesis Testing</text>
-            <text x="220" y="412" fill="#2c5a6e" font-size="11" text-anchor="middle" font-family="Inter, sans-serif">Comparing claims to data</text>
-            
-            <!-- Branch 2: Confidence Intervals & Probability -->
-            <line x1="500" y1="345" x2="500" y2="355" stroke="#2c7da0" stroke-width="2" />
-            <line x1="500" y1="355" x2="500" y2="370" stroke="#2c7da0" stroke-width="2" />
-            <rect x="380" y="375" width="240" height="50" rx="10" fill="white" stroke="#2c7da0" stroke-width="2" />
-            <text x="500" y="395" fill="#0b3b4f" font-size="14" font-weight="bold" text-anchor="middle" font-family="Inter, sans-serif">🎯 Confidence Intervals</text>
-            <text x="500" y="412" fill="#2c5a6e" font-size="11" text-anchor="middle" font-family="Inter, sans-serif">Range of plausible values</text>
-            
-            <!-- Branch 3: Challenges (right) -->
-            <line x1="500" y1="345" x2="500" y2="355" stroke="#2c7da0" stroke-width="2" />
-            <line x1="500" y1="355" x2="720" y2="355" stroke="#2c7da0" stroke-width="2" />
-            <line x1="720" y1="355" x2="720" y2="370" stroke="#2c7da0" stroke-width="2" />
-            <rect x="660" y="375" width="240" height="50" rx="10" fill="white" stroke="#2c7da0" stroke-width="2" />
-            <text x="780" y="395" fill="#0b3b4f" font-size="14" font-weight="bold" text-anchor="middle" font-family="Inter, sans-serif">⚠️ Challenges</text>
-            <text x="780" y="412" fill="#2c5a6e" font-size="11" text-anchor="middle" font-family="Inter, sans-serif">Bias, Confounding, Ethics</text>
-            
-            <!-- Connecting lines from branches to STATISTICAL REASONING -->
-            <line x1="220" y1="425" x2="220" y2="450" stroke="#2c7da0" stroke-width="2" />
-            <line x1="500" y1="425" x2="500" y2="450" stroke="#2c7da0" stroke-width="2" />
-            <line x1="780" y1="425" x2="780" y2="450" stroke="#2c7da0" stroke-width="2" />
-            <line x1="220" y1="450" x2="780" y2="450" stroke="#2c7da0" stroke-width="2" />
-            <line x1="500" y1="450" x2="500" y2="475" stroke="#2c7da0" stroke-width="2" />
-            
-            <!-- STATISTICAL REASONING Box -->
-            <rect x="300" y="480" width="400" height="40" rx="10" fill="#0b3b4f" />
-            <text x="500" y="505" fill="white" font-size="16" font-weight="bold" text-anchor="middle" font-family="Inter, sans-serif">🧠 3. STATISTICAL REASONING</text>
-            
-            <!-- Bottom row: SAMPLE and DESCRIPTIVE STATISTICS -->
-            <!-- Left: SAMPLE Box -->
-            <text x="160" y="545" fill="#0b3b4f" font-size="13" font-weight="bold" text-anchor="middle" font-family="Inter, sans-serif">SAMPLE:</text>
-            <rect x="50" y="520" width="220" height="50" rx="10" fill="#e8f0f4" stroke="#1f6e8c" stroke-width="2" />
-            <text x="160" y="540" fill="#0b3b4f" font-size="13" font-weight="bold" text-anchor="middle" font-family="Inter, sans-serif">📋 Representative Subset</text>
-            <text x="160" y="558" fill="#2c5a6e" font-size="11" text-anchor="middle" font-family="Inter, sans-serif">(We measure this)</text>
-            
-            <!-- STATISTICS Box -->
-            <text x="500" y="570" fill="#0b3b4f" font-size="13" font-weight="bold" text-anchor="middle" font-family="Inter, sans-serif">STATISTICS:</text>
-            <rect x="350" y="520" width="300" height="50" rx="10" fill="#f4fafd" stroke="#2c7da0" stroke-width="2" />
-            <text x="500" y="540" fill="#0b3b4f" font-size="13" font-weight="bold" text-anchor="middle" font-family="Inter, sans-serif">📊 Calculated Sample Values</text>
-            <text x="500" y="558" fill="#2c5a6e" font-size="11" text-anchor="middle" font-family="Inter, sans-serif">(Mean x̄, Proportion p̂)</text>
-            
-            <!-- Right: DESCRIPTIVE STATISTICS -->
-            <rect x="730" y="520" width="220" height="50" rx="10" fill="#5f8b9c" />
-            <text x="840" y="540" fill="white" font-size="13" font-weight="bold" text-anchor="middle" font-family="Inter, sans-serif">📈 DESCRIPTIVE</text>
-            <text x="840" y="558" fill="#d0e8f0" font-size="11" text-anchor="middle" font-family="Inter, sans-serif">Summarize & Describe</text>
-            
-            <!-- Small data points at bottom -->
-            <text x="145" y="590" fill="#2c5a6e" font-size="10" font-family="monospace">Age: 32</text>
-            <text x="200" y="590" fill="#2c5a6e" font-size="10" font-family="monospace">Score: 85</text>
-            <text x="265" y="590" fill="#2c5a6e" font-size="10" font-family="monospace">Pref: A</text>
-            <text x="500" y="590" fill="#2c5a6e" font-size="10" font-family="monospace" text-anchor="middle">Sample Data → Statistics</text>
-            <text x="775" y="590" fill="#2c5a6e" font-size="10" font-family="monospace">Mean, Median, SD, etc.</text>
-        </svg>
+        <img src="bigpicture.png" alt="Statistics Big Picture Flowchart" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+        <div style="display:none; color:#999; text-align:center; padding:20px;">⚠️ Image not found. Please ensure "bigpicture.png" is in the same folder as this HTML file.</div>
     </div>
     
     <div class="hero"><h1>📊 Critical Statistics: Complete Learning Hub</h1><p>General Education • 50+ Concepts • Applications • Ethics, IRB, R • 200‑Question Quiz • Interactive Big Picture with Hand Calculations</p></div>
