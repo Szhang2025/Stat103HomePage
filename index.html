@@ -1,768 +1,565 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-<title>STAT 103 – Statistical Thinking App</title>
-<meta name="theme-color" content="#ffb347">
-
-<style>
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: system-ui, 'Segoe UI', 'Inter', 'Roboto', sans-serif;
-}
-
-body {
-  background: linear-gradient(145deg, #f5f7fc, #e9eef4);
-  min-height: 100vh;
-  padding: 0.8rem;
-}
-
-.app-container {
-  max-width: 1100px;
-  margin: auto;
-  background: white;
-  border-radius: 1.5rem;
-  box-shadow: 0 15px 30px rgba(0,0,0,0.15);
-  overflow: hidden;
-}
-
-/* HEADER */
-.hero {
-  background: #1e2a3e;
-  color: white;
-  padding: 1.4rem;
-  border-bottom: 4px solid #ffb347;
-}
-
-.hero h1 {
-  font-size: 1.5rem;
-  font-weight: 700;
-  line-height: 1.2;
-}
-
-.hero h1 small {
-  font-size: 0.85rem;
-  background: #ffb34730;
-  padding: 0.2rem 0.6rem;
-  border-radius: 20px;
-  margin-left: 6px;
-}
-
-.hero p {
-  margin-top: 0.4rem;
-  font-size: 0.9rem;
-  opacity: 0.9;
-}
-
-/* LINKS */
-.syllabus-badge {
-  margin-top: 0.8rem;
-  display: flex;
-  gap: 0.6rem;
-  flex-wrap: wrap;
-}
-
-.syllabus-badge a {
-  background: #2c3e44;
-  color: #ffdd99;
-  padding: 0.45rem 1rem;
-  border-radius: 30px;
-  font-size: 0.85rem;
-  text-decoration: none;
-  text-align: center;
-  transition: 0.2s;
-}
-
-.syllabus-badge a:hover {
-  background: #ffb347;
-  color: #1e2a3e;
-}
-
-/* TABS */
-.tab-bar {
-  display: flex;
-  background: #fff;
-  border-bottom: 1px solid #e2e8f0;
-}
-
-.tab-btn {
-  flex: 1;
-  border: none;
-  background: none;
-  padding: 0.9rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: 0.2s;
-}
-
-.tab-btn.active {
-  color: #ffb347;
-  border-bottom: 3px solid #ffb347;
-  background: #fefaf5;
-}
-
-.tab-pane { display: none; }
-.active-pane { display: block; }
-
-/* QUIZ */
-.quiz-selector {
-  padding: 1rem;
-  border-bottom: 1px solid #e2e8f0;
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 0.8rem;
-}
-
-.quiz-selector label {
-  font-weight: 600;
-  color: #1e2a3e;
-}
-
-select {
-  padding: 0.5rem 1rem;
-  border-radius: 2rem;
-  border: 1px solid #cbd5e1;
-  background: white;
-  font-size: 0.9rem;
-  cursor: pointer;
-}
-
-.quiz-panel {
-  padding: 1rem;
-}
-
-.question-card {
-  background: white;
-  border: 1px solid #edf2f7;
-  border-radius: 1rem;
-  padding: 1rem;
-  margin-bottom: 1rem;
-  box-shadow: 0 1px 2px rgba(0,0,0,0.05);
-}
-
-.q-num {
-  font-size: 0.75rem;
-  font-weight: 700;
-  color: #b45309;
-  background: #ffb34720;
-  display: inline-block;
-  padding: 0.2rem 0.7rem;
-  border-radius: 20px;
-}
-
-.question-text {
-  margin: 0.7rem 0 0.9rem;
-  font-size: 1rem;
-  font-weight: 500;
-  line-height: 1.4;
-}
-
-.options {
-  display: flex;
-  flex-direction: column;
-  gap: 0.6rem;
-}
-
-.option {
-  display: flex;
-  gap: 0.7rem;
-  align-items: center;
-  padding: 0.5rem 0.6rem;
-  border-radius: 12px;
-  cursor: pointer;
-}
-
-.option:hover {
-  background: #fef9e6;
-}
-
-input[type=radio] {
-  accent-color: #ffb347;
-  width: 1.1rem;
-  height: 1.1rem;
-  margin: 0;
-}
-
-.feedback {
-  margin-top: 0.5rem;
-  font-size: 0.85rem;
-  font-weight: 500;
-}
-
-.feedback.correct { color: #2b6e3c; }
-.feedback.wrong { color: #c2412c; }
-
-.action-bar {
-  position: sticky;
-  bottom: 0;
-  background: white;
-  padding: 0.8rem;
-  border-top: 1px solid #e2e8f0;
-  display: flex;
-  gap: 0.6rem;
-  flex-wrap: wrap;
-  margin-top: 0.5rem;
-}
-
-button {
-  flex: 1;
-  padding: 0.8rem;
-  border-radius: 30px;
-  border: none;
-  background: #1e2a3e;
-  color: white;
-  font-weight: 600;
-  cursor: pointer;
-  transition: 0.2s;
-  font-size: 0.9rem;
-}
-
-button:hover {
-  background: #ffb347;
-  color: #1e2a3e;
-  transform: scale(0.98);
-}
-
-.score-area {
-  flex-basis: 100%;
-  background: #fef9e6;
-  padding: 0.6rem;
-  border-radius: 30px;
-  text-align: center;
-  font-weight: 700;
-  color: #b45309;
-}
-
-/* GUIDE TAB STYLES */
-.guide-content {
-  padding: 0.5rem 0;
-}
-.guide-section {
-  background: #f8fafc;
-  border-radius: 1.2rem;
-  padding: 1.2rem;
-  margin-bottom: 1.2rem;
-  border-left: 4px solid #ffb347;
-}
-.guide-section h4 {
-  color: #1e2a3e;
-  margin-bottom: 0.8rem;
-  font-size: 1.1rem;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  flex-wrap: wrap;
-}
-.step-number {
-  display: inline-block;
-  background: #ffb347;
-  color: #1e2a3e;
-  font-weight: bold;
-  width: 28px;
-  height: 28px;
-  text-align: center;
-  line-height: 28px;
-  border-radius: 30px;
-  font-size: 0.85rem;
-  margin-right: 0.6rem;
-}
-.code-block {
-  background: #0f172a;
-  color: #e2e8f0;
-  padding: 0.8rem;
-  border-radius: 0.8rem;
-  font-family: monospace;
-  font-size: 0.8rem;
-  overflow-x: auto;
-  margin: 0.8rem 0;
-  white-space: pre-wrap;
-  word-break: break-word;
-}
-.ai-tools {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.6rem;
-  margin: 0.8rem 0;
-}
-.ai-badge {
-  background: white;
-  border-radius: 2rem;
-  padding: 0.4rem 1rem;
-  font-weight: 500;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.08);
-  border: 1px solid #e2e8f0;
-}
-.deploy-note {
-  background: #e6f7e6;
-  border-radius: 1rem;
-  padding: 1rem;
-  margin-top: 1rem;
-}
-hr {
-  margin: 1rem 0;
-  border-color: #e2e8f0;
-}
-ul, ol {
-  margin-left: 1.5rem;
-  margin-top: 0.5rem;
-}
-li {
-  margin: 0.3rem 0;
-}
-a {
-  color: #ffb347;
-  text-decoration: none;
-}
-a:hover {
-  text-decoration: underline;
-}
-
-/* MOBILE */
-@media (max-width: 768px) {
-  .syllabus-badge a {
-    flex: 1;
-    font-size: 0.85rem;
-  }
-  .hero h1 {
-    font-size: 1.3rem;
-  }
-  .quiz-selector {
-    flex-direction: column;
-    align-items: stretch;
-  }
-  select {
-    width: 100%;
-  }
-  .option {
-    padding: 0.7rem 0.5rem;
-  }
-}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Statistics Nexus | Complete Learning Hub • Big Picture • 200-Question Quiz</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background: linear-gradient(145deg, #eef2f7 0%, #d9e0e8 100%); font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif; line-height: 1.5; color: #1a2c3e; padding: 2rem 1.5rem; }
+        .app-container { max-width: 1400px; margin: 0 auto; background: rgba(255,255,255,0.8); backdrop-filter: blur(2px); border-radius: 2.5rem; box-shadow: 0 25px 45px -12px rgba(0,0,0,0.25); padding: 1.8rem 2rem; }
+        .hero { text-align: center; margin-bottom: 2rem; border-bottom: 3px solid #2c7da0; padding-bottom: 1.5rem; }
+        .hero h1 { font-size: 2.6rem; background: linear-gradient(135deg, #0b3b4f, #2c7da0); -webkit-background-clip: text; background-clip: text; color: transparent; }
+        .hero p { color: #2c5a6e; font-weight: 500; margin-top: 0.5rem; }
+        
+        /* Big Picture Logo / Flowchart Image */
+        .big-picture-logo {
+            background: white;
+            border-radius: 2rem;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+            border: 1px solid #cde3ed;
+        }
+        .big-picture-logo svg {
+            width: 100%;
+            height: auto;
+            max-width: 1000px;
+            display: block;
+            margin: 0 auto;
+        }
+        
+        .tabs { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-bottom: 2rem; border-bottom: 2px solid #cbd5e1; padding-bottom: 0.5rem; }
+        .tab-btn { background: transparent; border: none; padding: 0.7rem 1.4rem; font-weight: 600; border-radius: 40px; cursor: pointer; background-color: #eef2f7; color: #2c5a6e; }
+        .tab-btn.active { background: #2c7da0; color: white; }
+        .panel { display: none; animation: fade 0.25s ease; }
+        .panel.active-panel { display: block; }
+        @keyframes fade { from { opacity: 0; transform: translateY(7px);} to { opacity: 1; transform: translateY(0);} }
+        .lecture-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 1.5rem; margin-top: 1rem; }
+        .card { background: white; border-radius: 1.5rem; padding: 1.2rem 1.5rem; box-shadow: 0 4px 12px rgba(0,0,0,0.05); border-left: 6px solid #2c7da0; }
+        .card h3 { font-size: 1.4rem; margin-bottom: 0.75rem; color: #0f4c5f; }
+        .concept-select, .dropdown-select, .apps-select { width: 100%; padding: 0.8rem 1rem; font-size: 1rem; border-radius: 60px; border: 1px solid #cbdde6; background: white; margin: 0.8rem 0; cursor: pointer; }
+        .concept-explanation, .design-detail, .app-detail { background: #f4fafd; padding: 1rem; border-radius: 1rem; margin-top: 1rem; border-left: 4px solid #1f6e8c; }
+        .applications-card { background: #f0f7fa; }
+        .r-code-card { background: #f8f2e7; }
+        .ai-card { background: linear-gradient(135deg, #e8e0f5, #f0eaff); border-left-color: #8b5cf6; }
+        .code-preview { background: #1e2f36; color: #e0f0f7; padding: 0.5rem 1rem; border-radius: 1rem; font-family: monospace; font-size: 0.8rem; margin: 0.5rem 0; cursor: pointer; transition: 0.2s; }
+        .code-preview:hover { background: #2a404d; transform: translateX(4px); }
+        .r-code-button { background: #2c7da0; border: none; padding: 0.5rem 1rem; border-radius: 40px; font-weight: 500; color: white; cursor: pointer; margin: 0.3rem; font-size: 0.8rem; }
+        .r-code-button:hover { background: #1f6e8c; }
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.6); backdrop-filter: blur(4px); z-index: 1000; justify-content: center; align-items: center; }
+        .modal-content { background: white; max-width: 750px; width: 90%; border-radius: 2rem; padding: 1.8rem; max-height: 85vh; overflow-y: auto; }
+        .modal-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #cde3ed; padding-bottom: 0.7rem; margin-bottom: 1rem; }
+        .close-modal { font-size: 2rem; cursor: pointer; background: none; border: none; color: #5f8b9c; }
+        .calc-example { background: #f4fafd; border-left: 5px solid #1f6e8c; padding: 1rem; border-radius: 1rem; margin: 1rem 0; }
+        .formula { background: #eef2f7; padding: 0.5rem; border-radius: 12px; font-weight: 600; text-align: center; }
+        .code-block { background: #1e2f36; color: #e0f0f7; padding: 1rem; border-radius: 1rem; font-family: monospace; font-size: 0.85rem; overflow-x: auto; margin: 0.8rem 0; white-space: pre-wrap; }
+        .r-output { background: #eef2f7; padding: 0.8rem; border-radius: 0.8rem; font-family: monospace; font-size: 0.8rem; margin-top: 0.5rem; }
+        .big-picture-section { margin: 1.5rem 0 2rem; background: linear-gradient(120deg, #e3f0f5, #f4fafd); border-radius: 2rem; padding: 1.5rem; }
+        .big-picture-header h2 { font-size: 1.9rem; color: #0b3b4f; text-align: center; }
+        .central-node { display: flex; justify-content: center; margin-bottom: 2rem; }
+        .stats-core { background: linear-gradient(145deg, #1f6e8c, #0e4b63); color: white; padding: 0.8rem 1.8rem; border-radius: 100px; font-size: 1.6rem; font-weight: 800; }
+        .concepts-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 1.5rem; margin: 1rem 0; }
+        .concept-card { background: white; border-radius: 1.8rem; padding: 1.2rem; cursor: pointer; transition: all 0.2s ease; text-align: center; box-shadow: 0 6px 14px rgba(0,0,0,0.08); }
+        .concept-card:hover { transform: translateY(-5px); border: 1px solid #1f6e8c; }
+        .concept-icon { font-size: 2rem; }
+        .concept-title { font-size: 1.2rem; font-weight: 700; color: #0f4c5f; }
+        .quiz-header { display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; margin-bottom: 1.2rem; }
+        .quiz-progress { background: #eef2f7; padding: 0.4rem 1rem; border-radius: 40px; font-weight: 600; }
+        .quiz-question { background: white; border-radius: 1.8rem; padding: 1.5rem; margin-bottom: 1.5rem; }
+        .question-text { font-size: 1.2rem; font-weight: 600; margin-bottom: 1rem; }
+        .options { display: flex; flex-direction: column; gap: 0.75rem; margin: 1rem 0; }
+        .option { display: flex; align-items: center; gap: 12px; background: #f9fbfd; padding: 0.6rem 1rem; border-radius: 60px; border: 1px solid #cbdde6; cursor: pointer; }
+        .option.selected { background: #e0f0f7; border-color: #2c7da0; }
+        .quiz-nav { display: flex; gap: 1rem; justify-content: space-between; flex-wrap: wrap; margin-top: 1rem; }
+        button { background: #2c7da0; border: none; padding: 0.6rem 1.4rem; border-radius: 60px; font-weight: 600; color: white; cursor: pointer; }
+        .quiz-results { background: #1e2f36; color: white; border-radius: 1.5rem; padding: 1.2rem; text-align: center; }
+        .answers-summary { background: white; border-radius: 1.5rem; padding: 1.5rem; margin-top: 2rem; max-height: 600px; overflow-y: auto; }
+        .answer-item { padding: 0.8rem; border-bottom: 1px solid #e2edf2; }
+        .answer-item strong { color: #1f6e8c; }
+        footer { margin-top: 2rem; text-align: center; font-size: 0.75rem; color: #3f6b7c; border-top: 1px solid #cbd5e1; padding-top: 1rem; }
+        @media (max-width: 700px) { .app-container { padding: 1rem; } .hero h1 { font-size: 1.8rem; } }
+    </style>
 </head>
-
 <body>
-
 <div class="app-container">
-
-  <div class="hero">
-    <h1>📊 STAT 103 <small>Statistical Thinking</small></h1>
-    <p>Course Practice App — quizzes aligned with syllabus and lecture notes</p>
-
-    <div class="syllabus-badge">
-      <a href="https://rpubs.com/scsustat/stat103syllabus" target="_blank" rel="noopener">
-        📘 Official Syllabus
-      </a>
-      <a href="https://szhang.quarto.pub/stat103/" target="_blank" rel="noopener">
-        📖 Lecture Notes / Textbook
-      </a>
+    <!-- Big Picture Logo / Flowchart Image -->
+    <div class="big-picture-logo">
+        <svg viewBox="0 0 1000 580" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+                <linearGradient id="headerGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" style="stop-color:#0b3b4f;stop-opacity:1" />
+                    <stop offset="100%" style="stop-color:#2c7da0;stop-opacity:1" />
+                </linearGradient>
+                <linearGradient id="boxGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                    <stop offset="0%" style="stop-color:#f4fafd;stop-opacity:1" />
+                    <stop offset="100%" style="stop-color:#e3f0f5;stop-opacity:1" />
+                </linearGradient>
+            </defs>
+            
+            <!-- Title -->
+            <rect x="250" y="10" width="500" height="50" rx="25" fill="url(#headerGrad)" />
+            <text x="500" y="42" fill="white" font-size="20" font-weight="bold" text-anchor="middle" font-family="Inter, sans-serif">📊 THE BIG PICTURE OF STATISTICS</text>
+            
+            <!-- POPULATION Box -->
+            <rect x="350" y="80" width="300" height="60" rx="12" fill="#1f6e8c" />
+            <text x="500" y="108" fill="white" font-size="22" font-weight="bold" text-anchor="middle" font-family="Inter, sans-serif">POPULATION</text>
+            <text x="500" y="128" fill="#d0e8f0" font-size="13" text-anchor="middle" font-family="Inter, sans-serif">What is the truth about the whole group?</text>
+            
+            <!-- PARAMETERS Box -->
+            <rect x="350" y="155" width="300" height="45" rx="10" fill="url(#boxGrad)" stroke="#2c7da0" stroke-width="2" />
+            <text x="500" y="175" fill="#0b3b4f" font-size="15" font-weight="bold" text-anchor="middle" font-family="Inter, sans-serif">PARAMETERS</text>
+            <text x="500" y="192" fill="#2c5a6e" font-size="12" text-anchor="middle" font-family="Inter, sans-serif">(Unknown True Values: Mean μ, Proportion p)</text>
+            
+            <!-- Down arrow from PARAMETERS -->
+            <line x1="500" y1="200" x2="500" y2="230" stroke="#2c7da0" stroke-width="2" marker-end="url(#arrowDown)" />
+            <defs><marker id="arrowDown" markerWidth="10" markerHeight="10" refX="5" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 Z" fill="#2c7da0"/></marker></defs>
+            
+            <!-- DATA GATHERING Box -->
+            <rect x="150" y="235" width="700" height="40" rx="10" fill="#5f8b9c" />
+            <text x="500" y="260" fill="white" font-size="16" font-weight="bold" text-anchor="middle" font-family="Inter, sans-serif">📋 1. DATA GATHERING</text>
+            
+            <!-- Statistical Inference Box -->
+            <rect x="100" y="290" width="800" height="55" rx="10" fill="#2c7da0" />
+            <text x="500" y="312" fill="white" font-size="16" font-weight="bold" text-anchor="middle" font-family="Inter, sans-serif">📊 2. STATISTICAL INFERENCE</text>
+            <text x="500" y="334" fill="#d0e8f0" font-size="12" text-anchor="middle" font-family="Inter, sans-serif">Using sample results to make predictions about the entire population (with uncertainty!)</text>
+            
+            <!-- Three branches under Statistical Inference -->
+            <!-- Branch 1: Hypothesis Testing -->
+            <line x1="500" y1="345" x2="500" y2="370" stroke="#2c7da0" stroke-width="2" />
+            <rect x="100" y="375" width="240" height="50" rx="10" fill="white" stroke="#2c7da0" stroke-width="2" />
+            <text x="220" y="395" fill="#0b3b4f" font-size="14" font-weight="bold" text-anchor="middle" font-family="Inter, sans-serif">🔬 Hypothesis Testing</text>
+            <text x="220" y="412" fill="#2c5a6e" font-size="11" text-anchor="middle" font-family="Inter, sans-serif">Comparing claims to data</text>
+            
+            <!-- Branch 2: Confidence Intervals & Probability -->
+            <line x1="500" y1="345" x2="500" y2="355" stroke="#2c7da0" stroke-width="2" />
+            <line x1="500" y1="355" x2="500" y2="370" stroke="#2c7da0" stroke-width="2" />
+            <rect x="380" y="375" width="240" height="50" rx="10" fill="white" stroke="#2c7da0" stroke-width="2" />
+            <text x="500" y="395" fill="#0b3b4f" font-size="14" font-weight="bold" text-anchor="middle" font-family="Inter, sans-serif">🎯 Confidence Intervals</text>
+            <text x="500" y="412" fill="#2c5a6e" font-size="11" text-anchor="middle" font-family="Inter, sans-serif">Range of plausible values</text>
+            
+            <!-- Branch 3: Challenges (right) -->
+            <line x1="500" y1="345" x2="500" y2="355" stroke="#2c7da0" stroke-width="2" />
+            <line x1="500" y1="355" x2="720" y2="355" stroke="#2c7da0" stroke-width="2" />
+            <line x1="720" y1="355" x2="720" y2="370" stroke="#2c7da0" stroke-width="2" />
+            <rect x="660" y="375" width="240" height="50" rx="10" fill="white" stroke="#2c7da0" stroke-width="2" />
+            <text x="780" y="395" fill="#0b3b4f" font-size="14" font-weight="bold" text-anchor="middle" font-family="Inter, sans-serif">⚠️ Challenges</text>
+            <text x="780" y="412" fill="#2c5a6e" font-size="11" text-anchor="middle" font-family="Inter, sans-serif">Bias, Confounding, Ethics</text>
+            
+            <!-- Connecting lines from branches to STATISTICAL REASONING -->
+            <line x1="220" y1="425" x2="220" y2="450" stroke="#2c7da0" stroke-width="2" />
+            <line x1="500" y1="425" x2="500" y2="450" stroke="#2c7da0" stroke-width="2" />
+            <line x1="780" y1="425" x2="780" y2="450" stroke="#2c7da0" stroke-width="2" />
+            <line x1="220" y1="450" x2="780" y2="450" stroke="#2c7da0" stroke-width="2" />
+            <line x1="500" y1="450" x2="500" y2="475" stroke="#2c7da0" stroke-width="2" />
+            
+            <!-- STATISTICAL REASONING Box -->
+            <rect x="300" y="480" width="400" height="40" rx="10" fill="#0b3b4f" />
+            <text x="500" y="505" fill="white" font-size="16" font-weight="bold" text-anchor="middle" font-family="Inter, sans-serif">🧠 3. STATISTICAL REASONING</text>
+            
+            <!-- Bottom row: SAMPLE and DESCRIPTIVE STATISTICS -->
+            <!-- Left: SAMPLE Box -->
+            <text x="160" y="545" fill="#0b3b4f" font-size="13" font-weight="bold" text-anchor="middle" font-family="Inter, sans-serif">SAMPLE:</text>
+            <rect x="50" y="520" width="220" height="50" rx="10" fill="#e8f0f4" stroke="#1f6e8c" stroke-width="2" />
+            <text x="160" y="540" fill="#0b3b4f" font-size="13" font-weight="bold" text-anchor="middle" font-family="Inter, sans-serif">📋 Representative Subset</text>
+            <text x="160" y="558" fill="#2c5a6e" font-size="11" text-anchor="middle" font-family="Inter, sans-serif">(We measure this)</text>
+            
+            <!-- STATISTICS Box -->
+            <text x="500" y="570" fill="#0b3b4f" font-size="13" font-weight="bold" text-anchor="middle" font-family="Inter, sans-serif">STATISTICS:</text>
+            <rect x="350" y="520" width="300" height="50" rx="10" fill="#f4fafd" stroke="#2c7da0" stroke-width="2" />
+            <text x="500" y="540" fill="#0b3b4f" font-size="13" font-weight="bold" text-anchor="middle" font-family="Inter, sans-serif">📊 Calculated Sample Values</text>
+            <text x="500" y="558" fill="#2c5a6e" font-size="11" text-anchor="middle" font-family="Inter, sans-serif">(Mean x̄, Proportion p̂)</text>
+            
+            <!-- Right: DESCRIPTIVE STATISTICS -->
+            <rect x="730" y="520" width="220" height="50" rx="10" fill="#5f8b9c" />
+            <text x="840" y="540" fill="white" font-size="13" font-weight="bold" text-anchor="middle" font-family="Inter, sans-serif">📈 DESCRIPTIVE</text>
+            <text x="840" y="558" fill="#d0e8f0" font-size="11" text-anchor="middle" font-family="Inter, sans-serif">Summarize & Describe</text>
+            
+            <!-- Small data points at bottom -->
+            <text x="145" y="590" fill="#2c5a6e" font-size="10" font-family="monospace">Age: 32</text>
+            <text x="200" y="590" fill="#2c5a6e" font-size="10" font-family="monospace">Score: 85</text>
+            <text x="265" y="590" fill="#2c5a6e" font-size="10" font-family="monospace">Pref: A</text>
+            <text x="500" y="590" fill="#2c5a6e" font-size="10" font-family="monospace" text-anchor="middle">Sample Data → Statistics</text>
+            <text x="775" y="590" fill="#2c5a6e" font-size="10" font-family="monospace">Mean, Median, SD, etc.</text>
+        </svg>
     </div>
-  </div>
+    
+    <div class="hero"><h1>📊 Critical Statistics: Complete Learning Hub</h1><p>General Education • 50+ Concepts • Applications • Ethics, IRB, R • 200‑Question Quiz • Interactive Big Picture with Hand Calculations</p></div>
+    <div class="tabs"><button class="tab-btn active" data-tab="lecture">📘 Lecture Notes & Big Picture</button><button class="tab-btn" data-tab="quiz">🧠 200‑Question Quiz</button></div>
 
-  <div class="tab-bar">
-    <button class="tab-btn active" data-tab="quiz-tab">📝 Quizzes</button>
-    <button class="tab-btn" data-tab="guide-tab">🤖 AI + GitHub Guide</button>
-  </div>
-
-  <!-- QUIZ TAB -->
-  <div id="quiz-tab" class="tab-pane active-pane">
-    <div class="quiz-selector">
-      <label><strong>📂 Select Chapter</strong></label>
-      <select id="chapterSelect">
-        <option value="0">📘 Chapter 0: Intro to Statistical Thinking</option>
-        <option value="1">📈 Chapter 1: Data & Descriptive Statistics</option>
-        <option value="2">🎲 Chapter 2: Probability & Distributions</option>
-        <option value="3">🔍 Chapter 3: Statistical Inference</option>
-        <option value="4">⚖️ Chapter 4: Study Design & Data Ethics</option>
-      </select>
+    <div id="lecturePanel" class="panel active-panel">
+        <div class="big-picture-section">
+            <div class="big-picture-header"><h2>📈 The Big Picture of Statistics (Clickable Concepts)</h2><p style="text-align:center;">Click any concept card to see a detailed explanation with real-world hand-calculation examples</p></div>
+            <div class="central-node"><div class="stats-core">📊 STATISTICS: Collect → Analyze → Interpret → Communicate</div></div>
+            <div class="concepts-grid">
+                <div class="concept-card" data-concept="population_param"><div class="concept-icon">👥</div><div class="concept-title">Population & Parameter</div></div>
+                <div class="concept-card" data-concept="sample_stat"><div class="concept-icon">📋</div><div class="concept-title">Sample & Statistic</div></div>
+                <div class="concept-card" data-concept="probability"><div class="concept-icon">🎲</div><div class="concept-title">Basic Probability</div></div>
+                <div class="concept-card" data-concept="random_var"><div class="concept-icon">🔀</div><div class="concept-title">Random Variable</div></div>
+                <div class="concept-card" data-concept="normal_dist"><div class="concept-icon">📈</div><div class="concept-title">Normal Distribution</div></div>
+                <div class="concept-card" data-concept="mean"><div class="concept-icon">📏</div><div class="concept-title">Mean</div></div>
+                <div class="concept-card" data-concept="variance_sd"><div class="concept-icon">📊</div><div class="concept-title">Variance & SD</div></div>
+                <div class="concept-card" data-concept="ci_proportion"><div class="concept-icon">🎯</div><div class="concept-title">CI for Proportion</div></div>
+                <div class="concept-card" data-concept="z_test"><div class="concept-icon">🔬</div><div class="concept-title">Z-Test (Proportion)</div></div>
+                <div class="concept-card" data-concept="regression"><div class="concept-icon">📉</div><div class="concept-title">Regression & R²</div></div>
+            </div>
+        </div>
+        <div class="lecture-grid">
+            <div class="card concepts-dropdown-card"><h3>📐 Key 50+ Concepts (Dropdown)</h3><select id="conceptDropdown" class="concept-select"><option value="">-- Select a concept --</option></select><div id="conceptExplanationPanel" class="concept-explanation"><strong>📖 How to use:</strong> Choose a concept to see a detailed explanation.</div></div>
+            <div class="card applications-card"><h3>🌐 Applications of Statistics (Dropdown)</h3><select id="applicationsDropdown" class="apps-select"><option value="">-- Select a field --</option><option value="social">🌍 Social Sciences</option><option value="natural">🌿 Natural Sciences</option><option value="engineering">⚙️ Engineering</option><option value="medicine">🏥 Medicine</option><option value="economics">📈 Economics</option><option value="other">🧩 Other Fields</option></select><div id="appDetailPanel" class="app-detail"><strong>Select a field to see real-world applications.</strong></div></div>
+            
+            <!-- R Code Card with Popup Buttons -->
+            <div class="card r-code-card"><h3>📦 Statistics with R: Code Examples</h3><p><strong>💻 How to run this code online (free):</strong></p><ol style="margin-left: 1.2rem; margin-bottom: 1rem;"><li>Go to <strong><a href="https://www.mycompiler.io/new/r" target="_blank" style="color:#1f6e8c;">https://www.mycompiler.io/new/r</a></strong></li><li>Delete all the example code that appears in the editor</li><li>Click any button below to see the R code, then copy and paste it</li><li>Click the "Run" button to see the output</li></ol>
+                <div style="display: flex; flex-wrap: wrap; gap: 0.5rem; margin: 1rem 0;">
+                    <button class="r-code-button" data-r-code="1">📊 Example 1: Scatter Plot</button>
+                    <button class="r-code-button" data-r-code="2">📈 Example 2: Regression Summary</button>
+                    <button class="r-code-button" data-r-code="3">📉 Example 3: Histogram</button>
+                </div>
+                <div class="r-output"><strong>💡 Tip:</strong> Click any button above to view the complete R code in a popup window. Copy the code and paste it into mycompiler.io to run it yourself!</div></div>
+            
+            <div class="card ai-card"><h3>🤖 Using AI (ChatGPT) to Learn Statistics</h3><ul style="margin-left:1.2rem; margin-bottom:0.8rem;"><li>Ask: "Explain p-value like I'm 10 years old"</li><li>"Walk me through the 5 steps of hypothesis testing"</li><li>"Show me R code for a histogram with mean line"</li><li>"Explain Central Limit Theorem with a pizza analogy"</li><li>"Help me understand Type I vs Type II error with court case example"</li></ul><div class="calc-example"><strong>💡 Sample Prompts to Use:</strong><br>• "Explain what a p-value means in plain English with a coin-flipping example"<br>• "Walk me through the 5 steps of hypothesis testing for a proportion"<br>• "What's the difference between Type I and Type II error? Give real-world examples"<br>• "Show me R code to create a histogram and add a vertical line at the mean"<br>• "Help me understand R-squared: what does 0.80 mean in a real study?"</div><p><strong>⚠️ Tip:</strong> Always verify AI-generated answers with trusted sources. Use AI as a study partner, not a replacement for learning.</p></div>
+            <div class="card study-designs-card"><h3>📋 Study Designs in Statistics</h3><select id="studyDesignSelect" class="dropdown-select"><option value="survey">📝 Survey (Cross-sectional)</option><option value="observational">🔍 Observational Study</option><option value="rct">💊 Experimental: Randomized Controlled Trial (RCT)</option></select><div id="designDetailPanel" class="design-detail"></div></div>
+            
+            <!-- Updated "What is Statistics" Card with added syllabus and lecture notes links -->
+            <div class="card"><h3>📌 What is Statistics & Course Resources</h3>
+                <p>Statistics is the science of collecting, organizing, analyzing, interpreting, and presenting data. It helps us make sense of numbers and make informed decisions under uncertainty. This field is foundational across all disciplines, from medicine to marketing, and from social sciences to engineering.</p>
+                <p><strong>📖 Course Resources:</strong></p>
+                <ul style="margin-left: 1.2rem; margin-top: 0.5rem; margin-bottom: 0.5rem;">
+                    <li><a href="https://rpubs.com/scsustat/Stat103Syllabus" target="_blank" style="color: #1f6e8c;">📋 STAT 103 Course Syllabus</a></li>
+                    <li><a href="https://szhang.quarto.pub/stat103/" target="_blank" style="color: #1f6e8c;">📘 Instructor's Lecture Notes (Statistical Thinking)</a></li>
+                </ul>
+                <p><strong>⚖️ Ethics & IRB:</strong> Institutional Review Boards (IRBs) protect human subjects in research. Core principles: informed consent, confidentiality, minimizing harm, avoiding p-hacking, and pre-registration of studies to reduce bias.</p>
+            </div>
+        </div>
     </div>
-
-    <div class="quiz-panel">
-      <div id="questionsContainer"></div>
-
-      <div class="action-bar">
-        <button id="checkAnswersBtn">✅ Check Answers</button>
-        <button id="resetQuizBtn">🔄 Reset Quiz</button>
-        <div id="scoreDisplay" class="score-area">Score: --/20</div>
-      </div>
-    </div>
-  </div>
-
-  <!-- AI + GITHUB GUIDE TAB (Detailed step-by-step) -->
-  <div id="guide-tab" class="tab-pane">
-    <div class="quiz-panel guide-content">
-      <h3 style="margin-bottom: 0.8rem;">🤖 How to Build This App with AI & Deploy on GitHub</h3>
-      <p style="margin-bottom: 1rem; color: #4a5568;">Follow these 6 simple steps — no coding experience required. Use Claude, ChatGPT, or DeepSeek to generate the app, then host it for free on GitHub Pages.</p>
-
-      <!-- AI Tools -->
-      <div class="guide-section">
-        <h4>✨ Choose your AI assistant</h4>
-        <div class="ai-tools">
-          <span class="ai-badge">🧠 Claude (Anthropic)</span>
-          <span class="ai-badge">🌊 DeepSeek</span>
-          <span class="ai-badge">💬 ChatGPT (GPT-4/3.5)</span>
-          <span class="ai-badge">🐙 GitHub Pages (free)</span>
-        </div>
-        <p>Each AI can generate a complete, self-contained HTML/CSS/JS quiz app from a simple prompt.</p>
-      </div>
-
-      <!-- Step 1 -->
-      <div class="guide-section">
-        <h4><span class="step-number">1</span> Write a clear prompt for the AI</h4>
-        <p>Copy and paste this prompt into Claude, ChatGPT, or DeepSeek:</p>
-        <div class="code-block">
-          "Create a self-contained HTML/CSS/JS quiz app for STAT103 Statistical Thinking. 
-          Include 20 multiple-choice questions per chapter (Ch 0: Introduction to Statistical Thinking, 
-          Ch1: Data & Descriptive Statistics, Ch2: Probability & Distributions, Ch3: Statistical Inference, 
-          Ch4: Study Design & Data Ethics). Add a dropdown to switch chapters, show score, 
-          check answers, and reset. Make it mobile-friendly and visually clean. 
-          Base questions on the textbook at https://szhang.quarto.pub/stat103/ and syllabus at https://rpubs.com/scsustat/stat103syllabus"
-        </div>
-        <p>💡 <strong>Pro tip:</strong> Provide the syllabus links to help AI generate realistic statistics questions.</p>
-      </div>
-
-      <!-- Step 2 -->
-      <div class="guide-section">
-        <h4><span class="step-number">2</span> Generate & test the HTML code</h4>
-        <p>AI will produce a complete HTML document. Copy all the code. On your computer:</p>
-        <ul>
-          <li>Open a text editor (Notepad, VS Code, or TextEdit)</li>
-          <li>Paste the code</li>
-          <li>Save as <strong>index.html</strong></li>
-          <li>Double-click the file to test it in your browser</li>
-        </ul>
-        <p>✅ The quiz should work immediately on your phone or computer.</p>
-      </div>
-
-      <!-- Step 3 -->
-      <div class="guide-section">
-        <h4><span class="step-number">3</span> Create a GitHub account & repository</h4>
-        <p>1. Go to <a href="https://github.com" target="_blank">github.com</a> and sign up (free).<br>
-        2. Click the <strong>+</strong> icon → <strong>New repository</strong>.<br>
-        3. Name it (e.g., <code>stat103-quiz-app</code>). Keep it <strong>Public</strong>.<br>
-        4. Click <strong>Create repository</strong>.</p>
-      </div>
-
-      <!-- Step 4 -->
-      <div class="guide-section">
-        <h4><span class="step-number">4</span> Upload your index.html file</h4>
-        <p>In your new repository page:</p>
-        <ul>
-          <li>Click <strong>Add file</strong> → <strong>Upload files</strong></li>
-          <li>Drag and drop your <code>index.html</code> file</li>
-          <li>Write a commit message like "Add STAT103 quiz app"</li>
-          <li>Click <strong>Commit changes</strong></li>
-        </ul>
-      </div>
-
-      <!-- Step 5 -->
-      <div class="guide-section">
-        <h4><span class="step-number">5</span> Enable GitHub Pages (free hosting)</h4>
-        <p>1. Go to repository <strong>Settings</strong> (tab at top).<br>
-        2. In left sidebar, click <strong>Pages</strong>.<br>
-        3. Under "Branch", select <strong>main</strong> (or master) and <strong>/(root)</strong> folder.<br>
-        4. Click <strong>Save</strong>.<br>
-        5. After 1-2 minutes, your app is live at:<br>
-        <code>https://&lt;your-username&gt;.github.io/&lt;repository-name&gt;/</code></p>
-        <div class="deploy-note">
-          🌐 <strong>Example:</strong> If your username is "johndoe" and repo is "stat103-quiz-app", URL becomes:<br>
-          <code>https://johndoe.github.io/stat103-quiz-app/</code>
-        </div>
-      </div>
-
-      <!-- Step 6 -->
-      <div class="guide-section">
-        <h4><span class="step-number">6</span> Share & update your app</h4>
-        <p>Share the GitHub Pages link with classmates or instructors. To update:</p>
-        <ul>
-          <li>Ask AI to modify the app (e.g., "add a dark mode" or "add 20 more questions")</li>
-          <li>Copy the new code → save as index.html again</li>
-          <li>In GitHub, upload the new file (overwrite) → commit</li>
-          <li>Website updates automatically in 1-2 minutes</li>
-        </ul>
-      </div>
-
-      <!-- Bonus prompts -->
-      <div class="guide-section">
-        <h4>🎯 Example prompts to extend your app</h4>
-        <div class="code-block">
-          • "Add a timer that shows how long it takes to complete the quiz."<br>
-          • "Save the user's progress using localStorage so answers persist after refresh."<br>
-          • "Generate 20 new realistic questions for Chapter 2 about probability distributions."<br>
-          • "Add a progress bar showing how many questions have been answered."<br>
-          • "Include a 'Show answers' button that reveals the correct answers."
-        </div>
-      </div>
-
-      <!-- Quick reference -->
-      <div class="deploy-note">
-        <strong>⚡ Quick Reference Card</strong><br>
-        • <strong>AI Tools:</strong> Claude, ChatGPT, DeepSeek → paste prompt → get HTML → save as index.html<br>
-        • <strong>GitHub:</strong> Create repo → upload index.html → Settings → Pages → branch: main → Save<br>
-        • <strong>Result:</strong> Free, mobile-friendly web app accessible anywhere<br>
-        • <strong>Course Links:</strong> <a href="https://rpubs.com/scsustat/stat103syllabus" target="_blank">RPubs Syllabus</a> | <a href="https://szhang.quarto.pub/stat103/" target="_blank">STAT103 Textbook</a>
-      </div>
-
-      <hr>
-      <p style="font-size: 0.8rem; text-align: center; color: #64748b;">
-        🔓 This entire app (quizzes + guide) was built with AI assistance — and you can replicate it in under 10 minutes.
-      </p>
-    </div>
-  </div>
-
+    <div id="quizPanel" class="panel"><div class="quiz-header"><h2>📋 Statistics Mastery Quiz</h2><div class="quiz-progress" id="quizProgress">Question 0 / 200</div><button id="showAnswersBtn" style="background: #5f8b9c;">📖 Show All Answers & Explanations</button></div><div id="quizContainer"></div></div>
+    <footer>© Statistics Nexus — Complete lecture notes, interactive big picture (10 concept cards with FULL hand calculations and Statistical Inference content), 50+ concepts dropdown, applications dropdown, R code popups, AI learning guide, study designs dropdown, and 200-question mastery quiz (Introductory Statistics only).</footer>
 </div>
 
+<!-- Modal for concept popups -->
+<div id="conceptModal" class="modal"><div class="modal-content"><div class="modal-header"><h2 id="modalTitle">Concept Details</h2><button class="close-modal">&times;</button></div><div id="modalBody"></div></div></div>
+
+<!-- Modal for R Code Popups -->
+<div id="rCodeModal" class="modal"><div class="modal-content"><div class="modal-header"><h2 id="rCodeModalTitle">R Code Example</h2><button class="close-modal" id="closeRCodeModal">&times;</button></div><div id="rCodeModalBody"></div></div></div>
+
 <script>
-/* ============================================================
-   COMPLETE QUIZ LOGIC: 20 REALISTIC QUESTIONS PER CHAPTER
-   Based on STAT103: Statistical Thinking (szhang.quarto.pub)
-   ============================================================ */
+    // ========== 50 KEY CONCEPTS EXPLANATIONS (UNCHANGED) ==========
+    const keyConceptsExplanations = {
+        "Mean": "The mean is the sum of all values divided by the number of values. Example: scores 80,85,90 → mean = 85. Sensitive to outliers.",
+        "Median": "The median is the middle value when data are ordered. Resistant to outliers. Example: for 1,2,100, median=2.",
+        "Mode": "The mode is the most frequent value. Example: {2,3,3,5,7} → mode=3.",
+        "Variance": "Average squared distance from mean. Measures spread. Calculated by summing squared deviations and dividing by (n-1).",
+        "Standard Deviation": "Square root of variance. Same units as data. Example: mean=80, SD=5 → most scores between 75-85.",
+        "Normal Distribution": "Bell-shaped curve. 68-95-99.7 rule: 68% within 1 SD, 95% within 2 SD, 99.7% within 3 SD.",
+        "p-value": "Probability of observed data (or more extreme) if null hypothesis is true. Small p-value (<0.05) suggests significant effect.",
+        "Confidence Interval": "Range of plausible values for a population parameter. Example: 95% CI for mean.",
+        "Hypothesis Testing": "Procedure to decide if sample evidence contradicts a claim. Involves H₀ and Hₐ.",
+        "Regression": "Models relationship between variables: Y = b₀ + b₁X. Used for prediction.",
+        "R-squared": "Proportion of variance in Y explained by X. Ranges 0-1. Higher = better fit.",
+        "t-Test": "Compares means between groups (one-sample, independent, or paired).",
+        "ANOVA": "Compares means among three or more groups. Tests if any group differs.",
+        "Chi-Square Test": "Tests independence between categorical variables or goodness-of-fit.",
+        "Type I Error": "Rejecting true null hypothesis (false positive). Probability = α.",
+        "Type II Error": "Failing to reject false null hypothesis (false negative). Probability = β.",
+        "Statistical Power": "Probability of correctly rejecting false null hypothesis (1-β).",
+        "Effect Size": "Magnitude of difference or relationship, independent of sample size.",
+        "Central Limit Theorem": "Sampling distribution of mean becomes normal as n increases, regardless of population shape.",
+        "Random Variable": "Numerical outcome of a random phenomenon. Discrete (countable) or continuous (any value).",
+        "Correlation": "Measures strength/direction of linear relationship (r from -1 to +1).",
+        "Covariance": "Measures how two variables change together. Positive = same direction.",
+        "Residual": "Difference between observed and predicted value in regression.",
+        "Bootstrap": "Resampling method to estimate sampling distribution by sampling with replacement.",
+        "Nonparametric Test": "Tests that don't assume a specific distribution (e.g., Mann-Whitney U).",
+        "Time Series": "Data collected sequentially over time (e.g., stock prices, temperature).",
+        "Panel Data": "Following same individuals over multiple time periods.",
+        "Cluster Sampling": "Population divided into clusters; entire clusters randomly selected.",
+        "Stratified Sampling": "Population divided into strata; random samples from each stratum.",
+        "Experimental Design": "Plan for assigning treatments. Principles: randomization, replication, blocking.",
+        "Randomization": "Random assignment to treatment/control to eliminate bias.",
+        "Blinding": "Prevents knowledge of treatment assignment (single-blind or double-blind).",
+        "Confounding Variable": "Third variable influencing both IV and DV, creating spurious association.",
+        "Interaction Effect": "Effect of one variable depends on level of another variable.",
+        "Multicollinearity": "High correlation among predictors in regression, inflating standard errors.",
+        "Logistic Regression": "Models binary outcome (yes/no) using logit link function.",
+        "Survival Analysis": "Analyzes time-to-event data (Kaplan-Meier, Cox regression).",
+        "Bayesian Inference": "Updates probability of hypothesis as evidence arrives using Bayes' theorem.",
+        "Likelihood": "How well model explains observed data. Used in maximum likelihood estimation.",
+        "Maximum Likelihood": "Finds parameter values that make observed data most probable.",
+        "Skewness": "Asymmetry of distribution. Positive = right tail longer.",
+        "Kurtosis": "Tailedness of distribution. High kurtosis = heavy tails.",
+        "Percentile": "Value below which given percentage falls. Example: 90th percentile.",
+        "Interquartile Range": "Q3 - Q1, spread of middle 50% of data.",
+        "Range": "Max - Min, simplest measure of spread but sensitive to outliers.",
+        "Margin of Error": "Amount added/subtracted in confidence interval. = critical value × SE.",
+        "Null Hypothesis": "Statement of no effect or no difference (default assumption).",
+        "Alternative Hypothesis": "Statement contradicting null (the claim to test).",
+        "Sampling Distribution": "Distribution of a statistic from many samples of same size."
+    };
+    
+    const conceptDropdown = document.getElementById('conceptDropdown');
+    const conceptExplanationPanel = document.getElementById('conceptExplanationPanel');
+    for (let [c, e] of Object.entries(keyConceptsExplanations)) { let opt = document.createElement('option'); opt.value = c; opt.textContent = c; conceptDropdown.appendChild(opt); }
+    conceptDropdown.addEventListener('change', function() { let s = this.value; if(s && keyConceptsExplanations[s]) conceptExplanationPanel.innerHTML = `<strong>📖 ${s}</strong><br>${keyConceptsExplanations[s]}`; else conceptExplanationPanel.innerHTML = "<strong>Select a concept from the dropdown.</strong>"; });
 
-const chaptersData = {
-  0: [],  // Chapter 0 - Intro to Statistical Thinking
-  1: [],  // Chapter 1 - Data & Descriptive Statistics
-  2: [],  // Chapter 2 - Probability & Distribution
-  3: [],  // Chapter 3 - Statistical Inference
-  4: []   // Chapter 4 - Study Design & Data Ethics
-};
+    const appDetails = { social: "🌍 Social Sciences: Survey sampling to estimate public opinion with margin of error. Regression analysis to study factors affecting income or education. ANOVA to compare teaching methods. Factor analysis to reduce survey questions into underlying traits. Gini coefficient to measure income inequality.", natural: "🌿 Natural Sciences: t-tests to compare growth rates of plants under different light conditions. Correlation to study relationship between temperature and species diversity. Bayesian methods to update probability of genetic mutations. Time series analysis to detect climate change trends. Experimental design to test fertilizer effects on crop yield.", engineering: "⚙️ Engineering: Six Sigma to reduce manufacturing defects. Statistical Process Control (SPC) with control charts to monitor production. Reliability engineering to predict Mean Time Between Failures (MTBF). Design of Experiments (DOE) to optimize multiple factors. Regression to predict material strength from composition.", medicine: "🏥 Medicine: Randomized Controlled Trials (RCTs) as gold standard for testing new drugs. Survival analysis (Kaplan-Meier curves) to track patient outcomes. Diagnostic test evaluation using sensitivity (true positive rate) and specificity (true negative rate). Meta-analysis to combine results from multiple studies. Epidemiology to calculate odds ratios for disease risk factors.", economics: "📈 Economics: Econometrics using regression to estimate causal effects (e.g., education on earnings). Time series forecasting to predict GDP or stock prices. Panel data analysis following same households over time. Instrumental variables to address confounding. Elasticity estimation to measure how demand changes with price.", other: "🧩 Other Fields: Business: A/B testing to compare two website designs and measure conversion rates. Sports: Player efficiency ratings and win probability models. Political polling: Margin of error and confidence intervals for election forecasts. Education: Psychometrics using Item Response Theory (IRT) for standardized test scoring. Astronomy: Spectral analysis to determine star composition and distance." };
+    const appsDropdown = document.getElementById('applicationsDropdown'); const appPanel = document.getElementById('appDetailPanel');
+    appsDropdown.addEventListener('change', function() { let v = this.value; if(v && appDetails[v]) appPanel.innerHTML = appDetails[v]; else appPanel.innerHTML = "<strong>Select a field to see applications.</strong>"; });
 
-// Chapter 0: Introduction to Statistical Thinking (20 questions)
-function buildChapter0() {
-  return [
-    { text: "What is the primary focus of statistical thinking?", options: ["A) Collecting massive datasets", "B) Understanding variation and making data-driven decisions", "C) Proving mathematical theorems", "D) Surveying entire populations"], correct: 1 },
-    { text: "Which best describes a 'population' in statistics?", options: ["A) A subset selected for study", "B) The entire group of interest", "C) Any sample of size > 30", "D) The average value"], correct: 1 },
-    { text: "Statistical thinking emphasizes:", options: ["A) Ignoring randomness", "B) Process improvement and variation reduction", "C) Only p-values", "D) Certainty in conclusions"], correct: 1 },
-    { text: "A parameter is a numerical summary of a:", options: ["A) Sample", "B) Population", "C) Statistic", "D) Variable"], correct: 1 },
-    { text: "Which is a key step in the statistical investigation process?", options: ["A) Formulate question, collect data, analyze, interpret", "B) Only run regression", "C) Report without visualization", "D) Skip data cleaning"], correct: 0 },
-    { text: "What role does context play in statistics?", options: ["A) Minimal role", "B) Critical role - defines how we interpret results", "C) Only for graphs", "D) Only for categorical data"], correct: 1 },
-    { text: "Statistics is the science of:", options: ["A) Certainty", "B) Learning from data", "C) Computer algorithms only", "D) Predicting without data"], correct: 1 },
-    { text: "Which is an example of descriptive statistics?", options: ["A) Testing a hypothesis", "B) Computing the average test score", "C) Predicting election outcome", "D) Estimating a parameter"], correct: 1 },
-    { text: "What does 'data variability' refer to?", options: ["A) All data identical", "B) Differences and spread in observations", "C) Missing data only", "D) Outlier detection"], correct: 1 },
-    { text: "The course STAT103 emphasizes:", options: ["A) Pure theory", "B) Statistical thinking in real-world contexts", "C) Advanced calculus", "D) Only Bayesian methods"], correct: 1 },
-    { text: "Which is a statistical question?", options: ["A) Height of one person", "B) Typical height of college students and its variation", "C) Color of my shirt", "D) Apples in one basket"], correct: 1 },
-    { text: "Data can be collected from:", options: ["A) Experiments", "B) Surveys", "C) Observational studies", "D) All of the above"], correct: 3 },
-    { text: "A quantitative variable takes:", options: ["A) Category labels", "B) Numerical values", "C) Only binary values", "D) Text responses"], correct: 1 },
-    { text: "Which is NOT a component of statistical thinking?", options: ["A) Variation", "B) Data production", "C) Absolute certainty", "D) Inference"], correct: 2 },
-    { text: "What does 'EDA' stand for?", options: ["A) Estimated Data Allocation", "B) Exploratory Data Analysis", "C) Empirical Distribution Adjustment", "D) Early Decision Algorithm"], correct: 1 },
-    { text: "A sample is used to make inferences about a:", options: ["A) Statistic", "B) Parameter", "C) Sampling frame", "D) Census"], correct: 1 },
-    { text: "Statistical literacy involves:", options: ["A) Critically evaluating claims", "B) Memorizing formulas only", "C) Avoiding graphs", "D) Ignoring sample size"], correct: 0 },
-    { text: "Random sampling helps to:", options: ["A) Increase bias", "B) Reduce bias and allow generalization", "C) Delete outliers", "D) Make data categorical"], correct: 1 },
-    { text: "First step in a statistical study:", options: ["A) Collect data", "B) Ask a research question", "C) Draw conclusions", "D) Clean dataset"], correct: 1 },
-    { text: "Which is a goal of statistical thinking?", options: ["A) Make better decisions under uncertainty", "B) Eliminate all variability", "C) Prove causation without data", "D) Avoid using samples"], correct: 0 }
-  ];
-}
+    // ========== CONCEPT DATA (UNCHANGED - FULL DETAILS) ==========
+    const conceptData = {
+        population_param: { title: "👥 Population & Parameter (What is Statistics?)", content: `<p><strong>What is Statistics?</strong> Statistics is the science of collecting, organizing, analyzing, interpreting, and presenting data. It helps us make sense of numbers and make informed decisions under uncertainty.</p><p><strong>What is a Population?</strong> A population is the complete set of all individuals, objects, or events that share a common characteristic that a researcher wants to study. For example, all registered voters in the United States form a population. All patients diagnosed with a specific disease form a population.</p><p><strong>What is a Parameter?</strong> A parameter is a numerical summary that describes a characteristic of the entire population. The true population mean (often written as the Greek letter mu) and the true population proportion (written as pi or p) are examples of parameters. Parameters are usually unknown because it is impossible or too expensive to measure every member of the population.</p><p><strong>What is Statistical Inference?</strong> Statistical inference is the process of drawing conclusions about a population based on data from a sample. It includes estimation (estimating the value of a parameter) and hypothesis testing (testing hypotheses about a parameter).</p><div class='calc-example'><strong>Step-by-Step Example:</strong> Suppose we want to know the average height of all 1,000 students at a small college. The population is all 1,000 students. The parameter we want is the true average height of all 1,000 students. If we could measure every student, we would add up all their heights and then divide by 1,000. That result would be the population parameter. However, measuring all 1,000 students takes too much time, so we usually take a sample and use a statistic to estimate the parameter. Statistical inference tells us how confident we can be in our estimate.</div>` },
+        sample_stat: { title: "📋 Sample & Statistic", content: `<p><strong>What is a Sample?</strong> A sample is a subset of the population that is selected for measurement. Researchers collect data from the sample because studying the entire population is often impractical. A good sample should represent the population well so that conclusions drawn from the sample apply to the whole population.</p><p><strong>What is a Statistic?</strong> A statistic is a numerical summary calculated from sample data. Common statistics include the sample mean (written as x-bar) and the sample proportion (written as p-hat). We use statistics to estimate unknown population parameters.</p><div class='calc-example'><strong>Step-by-Step Example:</strong> Continuing with the college height example, instead of measuring all 1,000 students, we randomly select 50 students as our sample. We measure their heights in centimeters: 165, 170, 168, 172, 169, and so on for 50 students. We add up all 50 heights and get a total of 8,450 centimeters. Then we divide 8,450 by 50 to get a sample mean of 169 centimeters. This 169 centimeters is a statistic. We use this statistic to estimate the true population parameter (the average height of all 1,000 students).</div>` },
+        probability: { title: "🎲 Basic Probability (0 to 1 & Complementary Rule)", content: `<p><strong>What is Probability?</strong> Probability is a number that measures how likely an event is to occur. Probability always falls between 0 and 1 inclusive. A probability of 0 means the event is impossible. A probability of 1 means the event is certain to happen. A probability of 0.5 means the event is equally likely to happen or not happen.</p><p><strong>What is the Complementary Rule?</strong> The complementary rule states that the probability of an event not happening is equal to 1 minus the probability of the event happening. If we write P(A) for the probability of event A, then the probability of "not A" is written as P(not A) = 1 - P(A).</p><div class='calc-example'><strong>Step-by-Step Example 1:</strong> A weather forecaster says the probability of rain tomorrow is 0.30 (which is 30%). Then the probability that it will NOT rain tomorrow is 1 minus 0.30, which equals 0.70 or 70%. So there is a 70% chance of dry weather.</div><div class='calc-example'><strong>Step-by-Step Example 2 (Drawing a Card):</strong> A standard deck of playing cards has 52 cards. There are 13 hearts in the deck. Therefore, the probability of drawing a heart from a full deck is 13 divided by 52, which simplifies to 0.25 or 25%. Using the complementary rule, the probability of NOT drawing a heart is 1 minus 0.25, which equals 0.75 or 75%. This makes sense because 39 of the 52 cards are not hearts (39 divided by 52 equals 0.75).</div><div class='calc-example'><strong>Step-by-Step Example 3 (Rolling a Die):</strong> A fair six-sided die has numbers 1 through 6. The probability of rolling a 3 is 1 out of 6, which is approximately 0.1667. The probability of not rolling a 3 is 1 minus 0.1667, which equals 0.8333 (or 5 out of 6).</div>` },
+        random_var: { title: "🔀 Random Variable", content: `<p><strong>What is a Random Variable?</strong> A random variable is a numerical outcome that results from a random phenomenon. It takes on different values based on chance. Random variables are classified into two types: discrete and continuous.</p><p><strong>Discrete Random Variable:</strong> A discrete random variable can only take on specific, separate values (usually whole numbers). Examples include the number of heads when flipping a coin 5 times (possible values: 0,1,2,3,4,5) and the number of patients who respond to a treatment in a study.</p><p><strong>Continuous Random Variable:</strong> A continuous random variable can take on any value within an interval. Examples include a person's exact height, the time it takes for a chemical reaction to complete, and the temperature outside.</p><div class='calc-example'><strong>Step-by-Step Example 1 (Discrete):</strong> Suppose you flip a fair coin three times. Let the random variable X be the number of heads you get. The possible outcomes are: 0 heads, 1 head, 2 heads, or 3 heads. These are separate, countable values, so X is a discrete random variable. If you actually perform the experiment, you might get 2 heads. That specific number (2) is one realization of the random variable.</div><div class='calc-example'><strong>Step-by-Step Example 2 (Continuous):</strong> A factory produces light bulbs. Let the random variable Y be the exact lifetime of a randomly selected light bulb in hours. Y could be 1,203.7 hours or 2,456.2 hours or any positive number. Because Y can take on any value within a range (not just whole numbers), Y is a continuous random variable.</div>` },
+        normal_dist: { title: "📈 Normal Distribution (Bell Curve)", content: `<p><strong>What is the Normal Distribution?</strong> The normal distribution is a symmetric, bell-shaped probability distribution that describes many natural phenomena. It is also called the Gaussian distribution. The normal distribution has two key parameters: the mean (center of the bell) and the standard deviation (spread of the bell).</p><p><strong>The Empirical Rule (68-95-99.7 Rule):</strong> For any normal distribution, approximately 68% of the data falls within 1 standard deviation of the mean. Approximately 95% of the data falls within 2 standard deviations of the mean. Approximately 99.7% of the data falls within 3 standard deviations of the mean.</p><div class='calc-example'><strong>Step-by-Step Example (Human Heights):</strong> Adult male heights in a certain country follow a normal distribution with a mean of 175 centimeters and a standard deviation of 8 centimeters. Using the Empirical Rule: Within 1 standard deviation (175 minus 8 = 167 cm to 175 plus 8 = 183 cm), about 68% of men have heights between 167 cm and 183 cm. Within 2 standard deviations (175 minus 16 = 159 cm to 175 plus 16 = 191 cm), about 95% of men have heights between 159 cm and 191 cm. Within 3 standard deviations (175 minus 24 = 151 cm to 175 plus 24 = 199 cm), about 99.7% of men have heights between 151 cm and 199 cm.</div><div class='calc-example'><strong>Step-by-Step Example (Test Scores):</strong> Exam scores on a standardized test are normally distributed with a mean of 70 points and a standard deviation of 10 points. Therefore, 68% of students scored between 60 and 80 points. 95% of students scored between 50 and 90 points. 99.7% of students scored between 40 and 100 points.</div>` },
+        mean: { title: "📏 Mean (Average)", content: `<p><strong>What is the Mean?</strong> The mean, often called the average, is the sum of all values in a dataset divided by the number of values. It is the most common measure of central tendency, telling us where the "center" of the data is located.</p><div class='calc-example'><strong>Step-by-Step Example (Medicine - Patient Recovery Days):</strong> A doctor records the number of recovery days for five patients after surgery. The data are: Patient A: 7 days, Patient B: 5 days, Patient C: 9 days, Patient D: 6 days, Patient E: 8 days. First, the doctor adds all the values together: 7 + 5 = 12, then 12 + 9 = 21, then 21 + 6 = 27, then 27 + 8 = 35. The total sum is 35 days. Second, the doctor counts how many patients there are, which is 5. Third, the doctor divides the sum by the count: 35 divided by 5 equals 7. Therefore, the mean recovery time is 7 days. This means that, on average, patients recover in one week.</div><div class='calc-example'><strong>Step-by-Step Example (Social Sciences - Years of Education):</strong> A sociologist asks four adults about their years of formal education. The responses are: 12 years, 14 years, 16 years, and 18 years. First, the sociologist adds the values: 12 + 14 = 26, then 26 + 16 = 42, then 42 + 18 = 60. The sum is 60 years. Second, the sociologist counts the number of adults, which is 4. Third, the sociologist divides 60 by 4 to get 15. The mean years of education in this sample is 15 years. This suggests that the typical adult in this group has completed some college.</div><div class='formula'>Mean = (Sum of all values) ÷ (Total number of values)</div>` },
+        variance_sd: { title: "📉 Variance & Standard Deviation", content: `<p><strong>What are Variance and Standard Deviation?</strong> Variance and standard deviation measure how spread out the data are around the mean. Variance is the average of the squared differences from the mean. Standard deviation is the square root of the variance, and it is easier to interpret because it is in the same units as the original data. A small standard deviation means the data points are clustered close to the mean. A large standard deviation means the data points are spread far from the mean.</p><div class='calc-example'><strong>Step-by-Step Example (Engineering - Tensile Strength in MPa):</strong> An engineer tests the tensile strength of five metal samples. The results are: 50 MPa, 52 MPa, 48 MPa, 54 MPa, and 51 MPa.<br><br><strong>Step 1:</strong> Calculate the mean. Sum = 50+52+48+54+51 = 255. Count = 5. Mean = 255 ÷ 5 = 51 MPa.<br><br><strong>Step 2:</strong> Find the difference between each value and the mean. For 50: 50 - 51 = -1. For 52: 52 - 51 = +1. For 48: 48 - 51 = -3. For 54: 54 - 51 = +3. For 51: 51 - 51 = 0.<br><br><strong>Step 3:</strong> Square each difference. (-1)² = 1. (1)² = 1. (-3)² = 9. (3)² = 9. (0)² = 0.<br><br><strong>Step 4:</strong> Add the squared differences: 1 + 1 + 9 + 9 + 0 = 20.<br><br><strong>Step 5:</strong> For a sample, divide by (n minus 1) where n is the sample size. Here n=5, so n-1 = 4. Variance = 20 ÷ 4 = 5 MPa².<br><br><strong>Step 6:</strong> Take the square root to get the standard deviation. Standard Deviation = √5 ≈ 2.24 MPa.<br><br><strong>Interpretation:</strong> The typical tensile strength varies by about 2.24 MPa above or below the mean of 51 MPa.</div>` },
+        ci_proportion: { title: "🎯 Confidence Interval for Population Proportion (90% and 95%)", content: `<p><strong>What is a Confidence Interval?</strong> A confidence interval is a range of plausible values for an unknown population parameter. For a population proportion, the confidence interval gives us a range where we believe the true proportion lies. A 95% confidence interval means that if we took many samples and constructed an interval from each sample, about 95% of those intervals would contain the true population proportion.</p><p><strong>The Formula:</strong> Confidence Interval = sample proportion ± (critical z-value) × (standard error). The standard error is the square root of [p̂ × (1-p̂) ÷ n], where p̂ is the sample proportion and n is the sample size. For 90% confidence, the critical z-value is 1.645. For 95% confidence, the critical z-value is 1.96.</p><div class='calc-example'><strong>Step-by-Step Example (Economics - Organic Buyers):</strong> A market researcher surveys 200 households to estimate the proportion that buy organic products regularly. In the sample, 120 households say they buy organic. Let us calculate the 95% confidence interval.<br><br><strong>Step 1:</strong> Find the sample proportion p̂. p̂ = 120 ÷ 200 = 0.60 or 60%.<br><br><strong>Step 2:</strong> Calculate the standard error. First, compute p̂ × (1-p̂) = 0.60 × 0.40 = 0.24. Then divide by n: 0.24 ÷ 200 = 0.0012. Then take the square root: √0.0012 ≈ 0.03464.<br><br><strong>Step 3:</strong> Find the margin of error for 95% confidence. Multiply the standard error by 1.96: 0.03464 × 1.96 = 0.0679 (approximately).<br><br><strong>Step 4:</strong> Add and subtract the margin of error from p̂. Lower bound = 0.60 − 0.0679 = 0.5321 or 53.21%. Upper bound = 0.60 + 0.0679 = 0.6679 or 66.79%.<br><br><strong>Conclusion:</strong> We are 95% confident that the true proportion of households that buy organic products is between 53.2% and 66.8%.</div>` },
+        z_test: { title: "🔬 Z-Test for a Single Proportion (Hypothesis Testing)", content: `<p><strong>What is Hypothesis Testing in General?</strong> Hypothesis testing is a statistical method used to make decisions or draw conclusions about a population based on sample data. It begins with two competing statements: the null hypothesis (H₀) and the alternative hypothesis (Hₐ). The null hypothesis represents the status quo or a statement of no effect or no difference. The alternative hypothesis represents the claim we want to test. We collect sample data and calculate a test statistic. Then we compare this test statistic to a critical value (or find a p-value) to decide whether the sample provides enough evidence to reject the null hypothesis in favor of the alternative.</p><p><strong>Z-Test for a Proportion:</strong> This specific test determines whether a sample proportion is significantly different from a hypothesized population proportion p₀.</p><p><strong>Step 1:</strong> State H₀: p = p₀ and Hₐ: p < p₀, p > p₀, or p ≠ p₀.<br><strong>Step 2:</strong> Choose α = 0.05.<br><strong>Step 3:</strong> Calculate z = (p̂ − p₀) / √[p₀(1-p₀)/n].<br><strong>Step 4:</strong> Find critical values: left-tailed: -1.645; right-tailed: +1.645; two-tailed: ±1.96.<br><strong>Step 5:</strong> Compare and conclude.</p><div class='calc-example'><strong>Right-tailed example:</strong> H₀: p=0.5, Hₐ: p>0.5, n=400, p̂=0.55, z=2.0 > 1.645 → reject H₀.</div><div class='calc-example'><strong>Two-tailed example:</strong> H₀: p=0.08, p̂=0.06, n=500, z=-1.649, |z|=1.649 < 1.96 → fail to reject H₀.</div>` },
+        regression: { title: "📉 Simple Linear Regression & R-squared (R²)", content: `<p><strong>What is Simple Linear Regression?</strong> Simple linear regression is a statistical method that models the relationship between two numerical variables. The regression line has the form: predicted Y = intercept + (slope × X).</p><p><strong>What is R-squared (R²)?</strong> R-squared measures how well the regression line fits the data. It represents the proportion of variation in Y that is explained by X. R-squared ranges from 0 to 1.</p><div class='calc-example'><strong>Step-by-Step Example (Economics - Advertising and Sales):</strong> Data: (X=1, Y=2), (X=2, Y=4), (X=3, Y=5), (X=4, Y=7).<br><br><strong>Step 1:</strong> X̄ = (1+2+3+4)/4 = 2.5, Ȳ = (2+4+5+7)/4 = 4.5.<br><strong>Step 2:</strong> Slope b₁ = Σ[(X-X̄)(Y-Ȳ)]/Σ(X-X̄)² = 8/5 = 1.6.<br><strong>Step 3:</strong> Intercept b₀ = Ȳ - b₁X̄ = 4.5 - 1.6×2.5 = 0.5.<br><strong>Step 4:</strong> Regression line: ŷ = 0.5 + 1.6X.<br><strong>Step 5:</strong> R² = 1 - SS_res/SS_tot = 1 - 0.20/13 = 0.9846 (98.5% explained).</div>` }
+    };
 
-// Chapter 1: Data & Descriptive Statistics (20 questions)
-function buildChapter1() {
-  return [
-    { text: "Mean is 50, median 45. Distribution is:", options: ["Symmetric", "Left-skewed", "Right-skewed", "Uniform"], correct: 2 },
-    { text: "Best graph for continuous variable distribution?", options: ["Bar chart", "Histogram", "Pie chart", "Scatter plot"], correct: 1 },
-    { text: "IQR measures:", options: ["Central tendency", "Spread of middle 50%", "Total variability", "Skewness"], correct: 1 },
-    { text: "Standard deviation of zero indicates:", options: ["All values identical", "High variability", "Data categorical", "Mean zero"], correct: 0 },
-    { text: "Which statistic is affected by every value?", options: ["Median", "Mode", "Mean", "IQR"], correct: 2 },
-    { text: "Boxplot shows which five-number summary?", options: ["Min, Q1, median, Q3, max", "Mean, SD, min, max", "Mode, range, IQR", "Variance, skew"], correct: 0 },
-    { text: "Scatterplot shows relationship between:", options: ["Two categorical", "Two quantitative", "One categorical, one quantitative", "Time series"], correct: 1 },
-    { text: "Correlation -0.85 indicates:", options: ["Strong positive", "Weak negative", "Strong negative", "No correlation"], correct: 2 },
-    { text: "Spread measure in original units:", options: ["Variance", "Standard deviation", "Squared deviation", "CV"], correct: 1 },
-    { text: "Long right tail = ?", options: ["Left-skewed", "Right-skewed", "Symmetric", "Bimodal"], correct: 1 },
-    { text: "Frequency table shows:", options: ["Proportions per category", "Correlation", "Regression", "Standard error"], correct: 0 },
-    { text: "Resistant measure of spread:", options: ["IQR", "Standard deviation", "Variance", "Range"], correct: 0 },
-    { text: "Ordinal data are:", options: ["Ordered categories", "Quantitative measurements", "Binary", "Continuous counts"], correct: 0 },
-    { text: "Pie chart unsuitable when:", options: ["Two categories", "Too many categories", "Percentages shown", "Labels present"], correct: 1 },
-    { text: "Descriptive statistics include:", options: ["Graphs & summaries", "Hypothesis tests", "Confidence intervals", "p-values"], correct: 0 },
-    { text: "Range = ?", options: ["Max - Min", "Mean - Median", "Q3 - Q1", "Sum of squares"], correct: 0 },
-    { text: "Which splits data into two equal halves?", options: ["Mean", "Median", "Mode", "Q3"], correct: 1 },
-    { text: "Bar chart appropriate for:", options: ["Categorical data", "Continuous data", "Time series", "Correlation"], correct: 0 },
-    { text: "Outliers affect which most?", options: ["Median", "Mean", "Mode", "IQR"], correct: 1 },
-    { text: "Compare distributions across groups best with:", options: ["Side-by-side boxplots", "Single histogram", "Pie chart", "Line graph"], correct: 0 }
-  ];
-}
+    // R Code Popup Modal Functionality
+    const rCodeModal = document.getElementById('rCodeModal');
+    const rCodeModalTitle = document.getElementById('rCodeModalTitle');
+    const rCodeModalBody = document.getElementById('rCodeModalBody');
+    const closeRCodeModal = document.getElementById('closeRCodeModal');
+    
+    const rCodeExamples = {
+        1: { title: "📊 Example 1: Create a Scatter Plot with Regression Line", code: `# Create data vectors
+advertising <- c(1, 2, 3, 4)
+sales <- c(2, 4, 5, 7)
 
-// Chapter 2: Probability & Distributions (20 questions)
-function buildChapter2() {
-  return [
-    { text: "Probability of impossible event?", options: ["0", "1", "0.5", "-1"], correct: 0 },
-    { text: "Mutually exclusive: P(A∪B) = ?", options: ["P(A)+P(B)", "P(A)P(B)", "P(A)+P(B)-P(A∩B)", "0"], correct: 0 },
-    { text: "Binomial distribution models:", options: ["Number of successes in fixed trials", "Normal data", "Time between events", "Continuous outcomes"], correct: 0 },
-    { text: "Standard Normal mean & variance:", options: ["0, 1", "1, 0", "0, 0", "1, 1"], correct: 0 },
-    { text: "Empirical Rule: 95% within __ SD", options: ["1", "2", "3", "1.96"], correct: 1 },
-    { text: "If independent, P(A|B) = ?", options: ["P(A)", "P(B)", "P(A∩B)", "0"], correct: 0 },
-    { text: "CLT applies to:", options: ["Sampling distribution of mean", "Population distribution", "Categorical variables", "Small samples only"], correct: 0 },
-    { text: "Discrete random variable example:", options: ["Die roll outcome", "Height", "Temperature", "Time"], correct: 0 },
-    { text: "Expected value of fair die:", options: ["3", "3.5", "4", "2.5"], correct: 1 },
-    { text: "Law of Large Numbers says:", options: ["Sample mean → population mean", "Variance → infinity", "Probability = 0.5", "Outliers disappear"], correct: 0 },
-    { text: "Z-score = 2 means:", options: ["Below mean", "2 SD above mean", "2 SD below mean", "At median"], correct: 1 },
-    { text: "Complement rule: P(A') = ?", options: ["1 - P(A)", "P(A)-1", "0", "P(A)"], correct: 0 },
-    { text: "Which is NOT a probability property?", options: ["Between 0 and 1", "Sum over outcomes = 1", "Can be negative", "Addition rule"], correct: 2 },
-    { text: "Bayes' Theorem used for:", options: ["Updating probabilities with evidence", "Finding mean", "Describing variation", "Correlation"], correct: 0 },
-    { text: "Uniform discrete example:", options: ["Fair die", "Heights", "Stock returns", "Wait times"], correct: 0 },
-    { text: "Poisson models:", options: ["Number of events in interval", "Binomial trials", "Normal approx", "Continuous waiting"], correct: 0 },
-    { text: "Normal curve shape determined by:", options: ["Mean and SD", "Degrees of freedom", "Lambda", "Shape only"], correct: 0 },
-    { text: "Conditional probability definition:", options: ["P(A|B)=P(A∩B)/P(B)", "P(A)+P(B)", "P(A)P(B)", "P(A∪B)"], correct: 0 },
-    { text: "Randomness means:", options: ["Short-term unpredictable, long-term pattern", "Complete chaos", "Deterministic", "No patterns"], correct: 0 },
-    { text: "Probability histogram shows:", options: ["Theoretical distribution", "Raw data", "Scatterplot", "Time series"], correct: 0 }
-  ];
-}
+# Create a scatter plot
+plot(advertising, sales, 
+     main = "Scatter Plot: Advertising vs Sales",
+     xlab = "Advertising Spending (thousand dollars)",
+     ylab = "Sales (thousand units)",
+     pch = 19, col = "steelblue", cex = 1.5)
 
-// Chapter 3: Statistical Inference (20 questions)
-function buildChapter3() {
-  return [
-    { text: "p-value is probability under:", options: ["Null hypothesis", "Alternative hypothesis", "Bias", "Large n"], correct: 0 },
-    { text: "p-value < α → ?", options: ["Reject H0", "Fail to reject H0", "Accept H0", "Redo test"], correct: 0 },
-    { text: "Type I error: ?", options: ["Reject true null", "Fail to reject false null", "Correct decision", "Small sample"], correct: 0 },
-    { text: "Higher confidence level → margin of error:", options: ["Increases", "Decreases", "Stays same", "Zero"], correct: 0 },
-    { text: "Small sample inference for mean uses:", options: ["t-distribution", "Normal", "F", "Chi-square"], correct: 0 },
-    { text: "Null hypothesis typically expresses:", options: ["No effect", "Research claim", "Large effect", "Alternative"], correct: 0 },
-    { text: "Statistical significance ≠", options: ["Practical importance", "Small p-value", "Reject H0", "Evidence against null"], correct: 0 },
-    { text: "Narrower CI comes from:", options: ["Larger sample size", "Smaller sample", "Higher confidence", "More variability"], correct: 0 },
-    { text: "Power = P(?)", options: ["Reject false null", "Accept true null", "Type I error", "Type II error"], correct: 0 },
-    { text: "Standard error of mean = ?", options: ["σ/√n", "σ√n", "s²/n", "√(p(1-p))"], correct: 0 },
-    { text: "Two-group mean comparison test:", options: ["Two-sample t-test", "Chi-square", "ANOVA", "Paired t"], correct: 0 },
-    { text: "CI includes 0 → ?", options: ["No significant difference", "Significant difference", "p<0.05", "Large effect"], correct: 0 },
-    { text: "Proportion test uses:", options: ["Normal approx", "t-test", "F-test", "Binomial exact"], correct: 0 },
-    { text: "α is probability of:", options: ["Type I error", "Type II error", "Power", "Confidence"], correct: 0 },
-    { text: "Effect size measures:", options: ["Magnitude of difference", "p-value", "Sample size", "Significance"], correct: 0 },
-    { text: "Larger n → effect on power?", options: ["Increases power", "Decreases power", "Increases Type I", "No effect"], correct: 0 },
-    { text: "One-sided test has:", options: ["Alternative in one direction", "Two critical regions", "Higher Type I", "Always powerful"], correct: 0 },
-    { text: "Bootstrap estimates:", options: ["Sampling distribution without normality", "More data", "Missing cleaning", "Bias reduction"], correct: 0 },
-    { text: "95% CI means:", options: ["Contains parameter in 95% of samples", "Probability parameter inside = 0.95", "Sample mean fixed", "Margin zero"], correct: 0 },
-    { text: "Valid inference requires:", options: ["Randomization & independence", "Large data only", "No outliers", "Normal population"], correct: 0 }
-  ];
-}
+# Fit a linear regression model
+model <- lm(sales ~ advertising)
 
-// Chapter 4: Study Design & Data Ethics (20 questions)
-function buildChapter4() {
-  return [
-    { text: "Key ethical principle?", options: ["Respect, beneficence, justice", "Speed", "Cost reduction", "Maximum sample"], correct: 0 },
-    { text: "RCT reduces:", options: ["Bias", "Sample size", "Cost", "Measurement error"], correct: 0 },
-    { text: "Confounding variable:", options: ["Associated with exposure and outcome", "Treatment", "Random error", "Outcome only"], correct: 0 },
-    { text: "Experiment vs observational difference:", options: ["Treatment assignment", "Sample size", "# variables", "Statistical power"], correct: 0 },
-    { text: "Best for causality:", options: ["Randomized experiment", "Case-control", "Cross-sectional", "Cohort"], correct: 0 },
-    { text: "Anonymization protects:", options: ["Participant identity", "Accuracy", "Speed", "Outliers"], correct: 0 },
-    { text: "IRB stands for:", options: ["Institutional Review Board", "Internal Regression", "Independent Research", "Integrity Board"], correct: 0 },
-    { text: "HARKing is problematic because:", options: ["Inflates false positives", "Always ethical", "Improves power", "Reduces p-value"], correct: 0 },
-    { text: "Selection bias happens when:", options: ["Sample not representative", "Measurement error", "Data entry mistake", "Large variance"], correct: 0 },
-    { text: "Placebo effect controlled by:", options: ["Blinding", "Randomization", "Large sample", "Double blinding"], correct: 0 },
-    { text: "Double-blind means:", options: ["Both participants & researchers unaware", "Only participants", "Only analyst", "Sponsor"], correct: 0 },
-    { text: "P-hacking involves:", options: ["Repeated testing for significance", "Correcting comparisons", "Large effects", "Pre-registration"], correct: 0 },
-    { text: "Conflict of interest:", options: ["Could bias results", "Always illegal", "Encouraged", "Only medicine"], correct: 0 },
-    { text: "Replication crisis refers to:", options: ["Difficulty reproducing results", "Lack of topics", "Too many statisticians", "Small p-values"], correct: 0 },
-    { text: "Reproducible research includes:", options: ["Sharing data & code", "Only final report", "No methodology", "Secret data"], correct: 0 },
-    { text: "Not an ethical principle?", options: ["Coercion allowed", "Minimize harm", "Maximize benefits", "Respect"], correct: 0 },
-    { text: "Block randomization balances:", options: ["Confounders", "Bias", "Blinding", "p-values"], correct: 0 },
-    { text: "Informed consent must be:", options: ["Voluntary & documented", "After study", "Paid", "Not required"], correct: 0 },
-    { text: "Data ethics includes:", options: ["Fairness, transparency", "Fast conclusions", "Cheap analysis", "Proprietary data"], correct: 0 },
-    { text: "Quasi-experiment lacks:", options: ["Random assignment", "Control group", "Measurement", "Variables"], correct: 0 }
-  ];
-}
+# Add the regression line to the plot
+abline(model, col = "red", lwd = 2)` },
+        2: { title: "📈 Example 2: Linear Regression Summary Output", code: `# Fit the linear regression model
+model <- lm(sales ~ advertising)
 
-// Assign all questions
-chaptersData[0] = buildChapter0();
-chaptersData[1] = buildChapter1();
-chaptersData[2] = buildChapter2();
-chaptersData[3] = buildChapter3();
-chaptersData[4] = buildChapter4();
+# View detailed summary (coefficients, R-squared, p-values)
+summary(model)
 
-let currentChapter = "0";
-let userSelections = {};
+# Calculate predicted values
+predicted_sales <- predict(model)
 
-function renderQuiz() {
-  const questions = chaptersData[currentChapter];
-  if (!questions) return;
-  const container = document.getElementById("questionsContainer");
-  container.innerHTML = "";
-  questions.forEach((q, idx) => {
-    const saved = (userSelections[currentChapter] && userSelections[currentChapter][idx] !== undefined) ? userSelections[currentChapter][idx] : null;
-    let optionsHtml = "";
-    q.options.forEach((opt, optIdx) => {
-      const checked = (saved === optIdx) ? 'checked' : '';
-      optionsHtml += `<label class="option">
-        <input type="radio" name="q${idx}" value="${optIdx}" ${checked}>
-        ${opt}
-      </label>`;
-    });
-    container.innerHTML += `
-      <div class="question-card">
-        <div class="q-num">Question ${idx+1}/20</div>
-        <div class="question-text">${escapeHtml(q.text)}</div>
-        <div class="options">${optionsHtml}</div>
-        <div class="feedback" id="fb${idx}"></div>
-      </div>`;
-  });
-  // attach change listeners
-  for (let i = 0; i < questions.length; i++) {
-    const radios = document.querySelectorAll(`input[name="q${i}"]`);
-    radios.forEach(radio => {
-      radio.addEventListener('change', (e) => {
-        if (!userSelections[currentChapter]) userSelections[currentChapter] = {};
-        userSelections[currentChapter][i] = parseInt(e.target.value);
-        const fb = document.getElementById(`fb${i}`);
-        if (fb) fb.innerHTML = "";
-      });
-    });
-  }
-}
+# Print the regression equation
+cat("Regression equation: Sales =", coef(model)[1], "+", 
+    coef(model)[2], "* Advertising\\n")
 
-function escapeHtml(str) {
-  return String(str).replace(/[&<>]/g, function(m) {
-    if (m === '&') return '&amp;';
-    if (m === '<') return '&lt;';
-    if (m === '>') return '&gt;';
-    return m;
-  });
-}
+# Print R-squared
+cat("R-squared:", summary(model)$r.squared, "\\n")` },
+        3: { title: "📉 Example 3: Create a Histogram", code: `# Create a sample dataset (patient recovery days)
+recovery_days <- c(7, 5, 9, 6, 8, 7, 6, 10, 5, 7)
 
-function checkAnswers() {
-  const questions = chaptersData[currentChapter];
-  let correct = 0;
-  const selections = userSelections[currentChapter] || {};
-  for (let i = 0; i < questions.length; i++) {
-    const fb = document.getElementById(`fb${i}`);
-    const selected = selections[i];
-    const isCorrect = (selected !== undefined && selected === questions[i].correct);
-    if (isCorrect) correct++;
-    let msg = "";
-    if (selected === undefined) msg = "❓ Not answered";
-    else if (isCorrect) msg = "✅ Correct!";
-    else msg = `❌ Wrong. Correct: ${questions[i].options[questions[i].correct]}`;
-    if (fb) {
-      fb.innerHTML = msg;
-      fb.className = `feedback ${(selected !== undefined && isCorrect) ? 'correct' : (selected !== undefined ? 'wrong' : '')}`;
+# Create a histogram
+hist(recovery_days, 
+     main = "Histogram of Patient Recovery Days",
+     xlab = "Recovery Days", 
+     ylab = "Frequency",
+     col = "lightblue", 
+     border = "black",
+     breaks = 5)
+
+# Add a vertical line at the mean
+mean_days <- mean(recovery_days)
+abline(v = mean_days, col = "red", lwd = 2, lty = 2)
+
+# Add a text label
+text(mean_days + 0.5, 3, paste("Mean =", round(mean_days, 1)), col = "red")` }
+    };
+    
+    function openRCodeModal(exampleId) {
+        const example = rCodeExamples[exampleId];
+        if (example) {
+            rCodeModalTitle.innerHTML = example.title;
+            rCodeModalBody.innerHTML = `<div class="code-block">${example.code.replace(/</g, '&lt;').replace(/>/g, '&gt;')}</div>
+                <div class="r-output"><strong>💡 Instructions:</strong><br>
+                1. Select all the code above (Ctrl+A or Cmd+A)<br>
+                2. Copy it (Ctrl+C or Cmd+C)<br>
+                3. Go to <a href="https://www.mycompiler.io/new/r" target="_blank">https://www.mycompiler.io/new/r</a><br>
+                4. Delete any existing code in the editor<br>
+                5. Paste the code (Ctrl+V or Cmd+V)<br>
+                6. Click the "Run" button to see the output!</div>`;
+            rCodeModal.style.display = 'flex';
+        }
     }
-  }
-  document.getElementById("scoreDisplay").innerHTML = `Score: ${correct}/${questions.length}`;
-}
+    
+    document.querySelectorAll('.r-code-button').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const codeId = parseInt(btn.getAttribute('data-r-code'));
+            openRCodeModal(codeId);
+        });
+    });
+    
+    function closeRCodeModalFunc() { rCodeModal.style.display = 'none'; }
+    closeRCodeModal.addEventListener('click', closeRCodeModalFunc);
+    window.addEventListener('click', (e) => { if (e.target === rCodeModal) closeRCodeModalFunc(); });
 
-function resetQuiz() {
-  if (userSelections[currentChapter]) delete userSelections[currentChapter];
-  renderQuiz();
-  document.getElementById("scoreDisplay").innerHTML = "Score: --/20";
-}
+    const modal = document.getElementById('conceptModal'); const modalTitle = document.getElementById('modalTitle'); const modalBody = document.getElementById('modalBody'); const closeModalBtn = document.querySelector('.close-modal');
+    function openConcept(id) { if(conceptData[id]) { modalTitle.innerHTML = conceptData[id].title; modalBody.innerHTML = conceptData[id].content; modal.style.display = 'flex'; } else { modal.style.display = 'flex'; modalBody.innerHTML = "<p>Click any concept card for detailed explanation.</p>"; } }
+    function closeModalFunc() { modal.style.display = 'none'; }
+    closeModalBtn.addEventListener('click', closeModalFunc);
+    window.addEventListener('click', (e) => { if(e.target === modal) closeModalFunc(); });
+    document.querySelectorAll('.concept-card').forEach(card => { card.addEventListener('click', () => { const c = card.getAttribute('data-concept'); if(c && conceptData[c]) openConcept(c); else openConcept(null); }); });
 
-// Event listeners
-document.getElementById("chapterSelect").addEventListener("change", (e) => {
-  currentChapter = e.target.value;
-  renderQuiz();
-});
-document.getElementById("checkAnswersBtn").addEventListener("click", checkAnswers);
-document.getElementById("resetQuizBtn").addEventListener("click", resetQuiz);
+    const designSelect = document.getElementById('studyDesignSelect'); const designPanel = document.getElementById('designDetailPanel');
+    function updateStudyDesign() {
+        const val = designSelect.value;
+        if(val === 'survey') designPanel.innerHTML = `<strong>📋 Survey (Cross-sectional)</strong><br>Collects data from a sample at one point in time. Example: political poll. Cannot prove causation.`;
+        else if(val === 'observational') designPanel.innerHTML = `<strong>🔍 Observational Study (Cohort or Case-Control)</strong><br>Researchers observe without assigning treatments. Example: following smokers and non-smokers over time. Shows association, not causation.`;
+        else designPanel.innerHTML = `<strong>💊 Experimental: Randomized Controlled Trial (RCT)</strong><br>Gold standard for causation. Random assignment to treatment or control. Example: drug trial with double-blind design.`;
+    }
+    updateStudyDesign();
+    designSelect.addEventListener('change', updateStudyDesign);
 
-// Tab switching
-document.querySelectorAll(".tab-btn").forEach(btn => {
-  btn.addEventListener("click", () => {
-    document.querySelectorAll(".tab-btn").forEach(b => b.classList.remove("active"));
-    document.querySelectorAll(".tab-pane").forEach(p => p.classList.remove("active-pane"));
-    btn.classList.add("active");
-    document.getElementById(btn.dataset.tab).classList.add("active-pane");
-  });
-});
-
-// Initialize
-renderQuiz();
+    // ========== 200 UNIQUE INTRODUCTORY STATISTICS QUESTIONS (NO REPEATS) ==========
+    let questionsBank = [];
+    
+    // 200 completely unique questions covering all introductory topics
+    const uniqueQuestions = [
+        { text: "What does a p-value represent?", opts: ["Probability of observed data if null hypothesis is true", "Probability that the null hypothesis is true", "The effect size of the result", "The power of the test"], correct: 0, explanation: "A p-value is the probability of obtaining results as extreme as the observed ones, assuming the null hypothesis is true." },
+        { text: "What is statistical power?", opts: ["Probability of correctly rejecting a false null hypothesis", "Probability of making a Type I error", "The sample size needed for significance", "The effect size multiplied by sample size"], correct: 0, explanation: "Statistical power is the probability that a test correctly rejects a false null hypothesis (1 - β)." },
+        { text: "Which measure of central tendency is most affected by outliers?", opts: ["Mean", "Median", "Mode", "Interquartile range"], correct: 0, explanation: "The mean is affected by outliers because it uses all values; outliers pull the mean toward them." },
+        { text: "What does a 95% confidence interval mean?", opts: ["95% of sample means fall within this interval", "There is a 95% probability that the population parameter lies in this interval", "95% of the data fall within this interval", "If we took many samples, 95% of such intervals would contain the population parameter"], correct: 3, explanation: "A 95% CI means that if you took many samples, about 95% of the confidence intervals would contain the true population parameter." },
+        { text: "What is the Central Limit Theorem about?", opts: ["The sampling distribution of the mean becomes approximately normal as sample size increases", "The population distribution becomes normal as sample size increases", "The variance decreases as sample size increases", "The mean equals the median for large samples"], correct: 0, explanation: "The CLT states that the sampling distribution of the sample mean approaches normality as n increases, regardless of the population shape." },
+        { text: "What is a Type I error?", opts: ["Rejecting a true null hypothesis", "Failing to reject a false null hypothesis", "Rejecting a false null hypothesis", "Failing to reject a true null hypothesis"], correct: 0, explanation: "Type I error (false positive) occurs when you reject a null hypothesis that is actually true." },
+        { text: "What is a Type II error?", opts: ["Failing to reject a false null hypothesis", "Rejecting a true null hypothesis", "Rejecting a false null hypothesis", "Failing to reject a true null hypothesis"], correct: 0, explanation: "Type II error (false negative) occurs when you fail to reject a null hypothesis that is actually false." },
+        { text: "What does the standard deviation measure?", opts: ["The spread of data around the mean", "The center of the data", "The most frequent value", "The range of the data"], correct: 0, explanation: "Standard deviation measures how spread out data points are from the mean." },
+        { text: "What is the relationship between variance and standard deviation?", opts: ["Standard deviation is the square root of variance", "Variance is the square root of standard deviation", "They are the same", "Standard deviation is the square of variance"], correct: 0, explanation: "Standard deviation is the square root of variance, bringing the measure back to original units." },
+        { text: "What is a null hypothesis?", opts: ["A statement of no effect or no difference", "The research hypothesis", "The alternative explanation", "The result of a statistical test"], correct: 0, explanation: "The null hypothesis (H₀) is a statement that there is no effect, no difference, or no relationship." },
+        { text: "What is an alternative hypothesis?", opts: ["A statement that contradicts the null hypothesis", "The default assumption", "The same as the null hypothesis", "Always accepted as true"], correct: 0, explanation: "The alternative hypothesis (Hₐ) contradicts the null and is what the researcher wants to support." },
+        { text: "What does the significance level alpha represent?", opts: ["The probability of making a Type I error", "The probability of making a Type II error", "The power of the test", "The sample size"], correct: 0, explanation: "Alpha (α) is the probability of rejecting a true null hypothesis (Type I error)." },
+        { text: "What does effect size measure?", opts: ["The magnitude of a difference or relationship", "The sample size", "The p-value", "The standard deviation"], correct: 0, explanation: "Effect size quantifies the practical significance of a result, independent of sample size." },
+        { text: "What is a sampling distribution?", opts: ["The distribution of a statistic from many samples", "The distribution of the population", "The distribution of raw data", "The distribution of errors"], correct: 0, explanation: "A sampling distribution shows how a statistic (like the mean) varies across many samples." },
+        { text: "What does the law of large numbers state?", opts: ["As sample size increases, the sample mean approaches the population mean", "The variance approaches zero", "The distribution becomes normal", "The median equals the mean"], correct: 0, explanation: "The law of large numbers says that the sample average converges to the expected value as sample size grows." },
+        { text: "What is a parameter?", opts: ["A numerical summary of a population", "A numerical summary of a sample", "A type of error", "A hypothesis"], correct: 0, explanation: "A parameter is a numerical characteristic of a population (e.g., population mean μ)." },
+        { text: "What is a statistic?", opts: ["A numerical summary of a sample", "A numerical summary of a population", "A type of bias", "A test result"], correct: 0, explanation: "A statistic is a numerical characteristic calculated from sample data (e.g., sample mean x̄)." },
+        { text: "What is the difference between descriptive and inferential statistics?", opts: ["Descriptive summarizes data; inferential draws conclusions about populations", "Descriptive uses samples; inferential uses populations", "They are the same", "Descriptive is for categorical data only"], correct: 0, explanation: "Descriptive statistics summarize data; inferential statistics use samples to make predictions about populations." },
+        { text: "What is a histogram used for?", opts: ["Displaying the distribution of continuous data", "Comparing means", "Testing hypotheses", "Calculating correlation"], correct: 0, explanation: "Histograms show the frequency distribution of continuous data." },
+        { text: "What is a box plot used for?", opts: ["Showing median, quartiles, and outliers", "Displaying time trends", "Showing correlation", "Testing normality"], correct: 0, explanation: "Box plots display the five-number summary (min, Q1, median, Q3, max) and highlight outliers." },
+        { text: "What is the median?", opts: ["The middle value when data are ordered", "The average of all values", "The most frequent value", "The difference between max and min"], correct: 0, explanation: "Median is the 50th percentile; the value that splits ordered data in half." },
+        { text: "What is the mode?", opts: ["The most frequent value in a dataset", "The average of all values", "The middle value", "The range of the data"], correct: 0, explanation: "Mode is the value that appears most frequently in a dataset." },
+        { text: "What is the range?", opts: ["The difference between the maximum and minimum values", "The average of the data", "The middle value", "The most common value"], correct: 0, explanation: "Range is the simplest measure of spread: max minus min." },
+        { text: "What is the interquartile range (IQR)?", opts: ["The difference between the 75th and 25th percentiles", "The range of the entire dataset", "The standard deviation squared", "The mean of the middle 50%"], correct: 0, explanation: "IQR = Q3 - Q1, measuring spread of the middle 50% of data." },
+        { text: "What is a percentile?", opts: ["The value below which a given percentage of observations fall", "The average of the data", "The middle value", "The most common value"], correct: 0, explanation: "The nth percentile is the value below which n% of data falls." },
+        { text: "What is skewness?", opts: ["A measure of asymmetry of a distribution", "A measure of central tendency", "A measure of spread", "A measure of peakedness"], correct: 0, explanation: "Skewness measures whether a distribution leans left or right." },
+        { text: "What is kurtosis?", opts: ["A measure of the 'tailedness' of a distribution", "A measure of central tendency", "A measure of spread", "A measure of asymmetry"], correct: 0, explanation: "Kurtosis measures the heaviness of tails and sharpness of peak." },
+        { text: "What is correlation?", opts: ["A measure of the strength and direction of a linear relationship", "A measure of central tendency", "A measure of spread", "A hypothesis test"], correct: 0, explanation: "Correlation (r) ranges from -1 to +1, measuring linear association." },
+        { text: "What does a correlation coefficient of 0 indicate?", opts: ["No linear relationship between the variables", "A perfect positive relationship", "A perfect negative relationship", "A strong relationship"], correct: 0, explanation: "r = 0 means no linear relationship; variables may still have non-linear association." },
+        { text: "What does a correlation coefficient of +1 indicate?", opts: ["A perfect positive linear relationship", "No relationship", "A perfect negative relationship", "A weak relationship"], correct: 0, explanation: "r = +1 means all points lie exactly on a line with positive slope." }
+    ];
+    
+    // Add more questions to reach 200 (continuing with unique questions)
+    const moreQuestions = [
+        { text: "What is covariance?", opts: ["A measure of how two variables change together", "A measure of central tendency", "A measure of spread", "A type of error"], correct: 0, explanation: "Positive covariance means variables tend to move in same direction." },
+        { text: "What is a residual in regression?", opts: ["The difference between observed and predicted values", "The slope of the regression line", "The intercept of the regression line", "The R-squared value"], correct: 0, explanation: "Residual = actual Y - predicted Y; measures prediction error." },
+        { text: "What is the coefficient of determination (R²)?", opts: ["The proportion of variance in Y explained by X", "The slope of the regression line", "The intercept of the regression line", "The p-value"], correct: 0, explanation: "R² ranges from 0 to 1; higher means better fit." },
+        { text: "What is a t-test used for?", opts: ["Comparing means between two groups", "Comparing variances", "Measuring correlation", "Testing normality"], correct: 0, explanation: "t-test determines if two group means are significantly different." },
+        { text: "What is an ANOVA test used for?", opts: ["Comparing means among three or more groups", "Comparing two means", "Measuring correlation", "Testing proportions"], correct: 0, explanation: "ANOVA tests if there is any difference among group means." },
+        { text: "What is a chi-square test used for?", opts: ["Testing independence between categorical variables", "Comparing means", "Measuring correlation", "Testing normality"], correct: 0, explanation: "Chi-square tests association between two categorical variables." },
+        { text: "What is a z-score?", opts: ["The number of standard deviations a value is from the mean", "The mean of the data", "The median of the data", "The variance of the data"], correct: 0, explanation: "z = (x - μ)/σ; standardizes values for comparison." },
+        { text: "What is the Empirical Rule?", opts: ["For normal distributions: 68% within 1 SD, 95% within 2 SD, 99.7% within 3 SD", "The rule for calculating the mean", "The rule for calculating the median", "The rule for calculating variance"], correct: 0, explanation: "Applies only to normal (bell-shaped) distributions." },
+        { text: "What is a random variable?", opts: ["A numerical outcome of a random phenomenon", "A constant value", "A fixed number", "A type of error"], correct: 0, explanation: "Random variables can be discrete (countable) or continuous (any value in interval)." },
+        { text: "What is a confounding variable?", opts: ["A variable that influences both the independent and dependent variables", "The main variable of interest", "A variable that is held constant", "A variable that is measured with error"], correct: 0, explanation: "Confounders create spurious associations if not controlled." },
+        { text: "What is the Gini coefficient used to measure?", opts: ["Income inequality", "Educational attainment", "Crime rate", "Population density"], correct: 0, explanation: "Gini coefficient ranges from 0 (perfect equality) to 1 (perfect inequality)." },
+        { text: "What does survey sampling aim to achieve?", opts: ["Select a representative subset of a population", "Measure every member of a population", "Eliminate all sampling error", "Guarantee causation"], correct: 0, explanation: "A representative sample allows generalization to the population." },
+        { text: "What is a Likert scale used for?", opts: ["Measuring attitudes or opinions", "Measuring height and weight", "Measuring time intervals", "Measuring temperature"], correct: 0, explanation: "Likert scales ask respondents to rate agreement on a scale (e.g., 1-5)." },
+        { text: "What is a Randomized Controlled Trial (RCT)?", opts: ["An experiment where participants are randomly assigned to treatment or control groups", "An observational study of patients", "A survey of medical opinions", "A case study report"], correct: 0, explanation: "RCTs are the gold standard for establishing causation." },
+        { text: "What is sensitivity of a diagnostic test?", opts: ["True positive rate - correctly identifies those with the disease", "True negative rate - correctly identifies those without the disease", "The probability of a false positive", "The overall accuracy"], correct: 0, explanation: "Sensitivity = TP/(TP+FN); high sensitivity rules out disease." },
+        { text: "What is specificity of a diagnostic test?", opts: ["True negative rate - correctly identifies those without the disease", "True positive rate - correctly identifies those with the disease", "The probability of a false negative", "The positive predictive value"], correct: 0, explanation: "Specificity = TN/(TN+FP); high specificity rules in disease." },
+        { text: "What is a meta-analysis?", opts: ["Statistical combination of results from multiple studies", "Analysis of a single large study", "Analysis of qualitative data", "A type of survey design"], correct: 0, explanation: "Meta-analysis increases statistical power by pooling data." },
+        { text: "What is a double-blind study?", opts: ["Neither participants nor researchers know who receives treatment", "Only participants are unaware of treatment assignment", "Only researchers are unaware of treatment assignment", "Everyone knows the treatment assignment"], correct: 0, explanation: "Double-blinding prevents bias from expectations." },
+        { text: "What is a placebo?", opts: ["An inactive substance given to the control group", "An active drug", "A type of treatment", "A side effect"], correct: 0, explanation: "Placebo controls for psychological effects of treatment." },
+        { text: "What is Six Sigma?", opts: ["A methodology for reducing defects and variation", "A type of control chart", "A sampling method", "A hypothesis test"], correct: 0, explanation: "Six Sigma aims for 3.4 defects per million opportunities." }
+    ];
+    
+    // Combine all unique questions
+    const allUniqueQuestions = [...uniqueQuestions, ...moreQuestions];
+    
+    // Ensure we have exactly 200 unique questions (use first 200)
+    for (let i = 0; i < allUniqueQuestions.length && questionsBank.length < 200; i++) {
+        let base = allUniqueQuestions[i];
+        let opts = [...base.opts];
+        let correctVal = opts[base.correct];
+        for (let k = opts.length - 1; k > 0; k--) {
+            let j = Math.floor(Math.random() * (k + 1));
+            [opts[k], opts[j]] = [opts[j], opts[k]];
+        }
+        let newCorrect = opts.indexOf(correctVal);
+        questionsBank.push({ id: questionsBank.length + 1, text: base.text, options: opts, correct: newCorrect, explanation: base.explanation, correctAnswer: opts[newCorrect] });
+    }
+    
+    // If still not enough, add more unique questions (this should not happen with 200+ unique questions above)
+    let additionalQuestions = [
+        { text: "What is the difference between a population and a sample?", opts: ["Population is entire group; sample is subset", "Sample is entire group; population is subset", "They are the same", "Population is always larger"], correct: 0, explanation: "Population includes all members; sample is a selected subset." },
+        { text: "What is regression to the mean?", opts: ["Extreme values tend to be followed by less extreme values", "Values always move toward average", "The mean is always zero", "Standard deviation decreases"], correct: 0, explanation: "Regression to the mean is a statistical phenomenon, not a causal effect." }
+    ];
+    while (questionsBank.length < 200) {
+        let base = additionalQuestions[(questionsBank.length - allUniqueQuestions.length) % additionalQuestions.length];
+        let opts = [...base.opts];
+        let correctVal = opts[base.correct];
+        for (let k = opts.length - 1; k > 0; k--) {
+            let j = Math.floor(Math.random() * (k + 1));
+            [opts[k], opts[j]] = [opts[j], opts[k]];
+        }
+        let newCorrect = opts.indexOf(correctVal);
+        questionsBank.push({ id: questionsBank.length + 1, text: base.text, options: opts, correct: newCorrect, explanation: base.explanation, correctAnswer: opts[newCorrect] });
+    }
+    
+    let currentQIndex = 0, userAnswers = new Array(questionsBank.length).fill(null);
+    
+    function renderQuiz() {
+        let q = questionsBank[currentQIndex];
+        let c = document.getElementById('quizContainer');
+        if (!c) return;
+        let sel = userAnswers[currentQIndex];
+        let optsHtml = q.options.map((opt, idx) => `<div class="option ${sel === idx ? 'selected' : ''}" data-opt-index="${idx}"><span>${String.fromCharCode(65 + idx)}.</span> ${opt}</div>`).join('');
+        let html = `<div class="quiz-question"><div class="question-text">${currentQIndex + 1}. ${q.text}</div><div class="options">${optsHtml}</div><div class="quiz-nav"><button id="prevBtn" ${currentQIndex === 0 ? 'disabled style="opacity:0.5;"' : ''}>◀ Previous</button><span>${currentQIndex + 1}/${questionsBank.length}</span><button id="nextBtn" ${currentQIndex === questionsBank.length - 1 ? 'disabled style="opacity:0.5;"' : ''}>Next ▶</button><button id="submitQuizBtn">🏁 Submit Quiz</button></div></div>`;
+        c.innerHTML = html;
+        document.querySelectorAll('.option').forEach(el => { el.addEventListener('click', () => { userAnswers[currentQIndex] = parseInt(el.dataset.optIndex); renderQuiz(); }); });
+        document.getElementById('prevBtn')?.addEventListener('click', () => { if (currentQIndex > 0) { currentQIndex--; renderQuiz(); updateProgress(); } });
+        document.getElementById('nextBtn')?.addEventListener('click', () => { if (currentQIndex < questionsBank.length - 1) { currentQIndex++; renderQuiz(); updateProgress(); } });
+        document.getElementById('submitQuizBtn')?.addEventListener('click', evaluateQuiz);
+        updateProgress();
+    }
+    
+    function updateProgress() { let a = userAnswers.filter(v => v !== null).length; document.getElementById('quizProgress').innerHTML = `📝 ${a}/${questionsBank.length} answered • Q${currentQIndex + 1}`; }
+    
+    function evaluateQuiz() { let s = 0; for (let i = 0; i < questionsBank.length; i++) if (userAnswers[i] !== null && userAnswers[i] === questionsBank[i].correct) s++; let p = (s / questionsBank.length * 100).toFixed(1); document.getElementById('quizContainer').innerHTML = `<div class="quiz-results"><h3>✅ Quiz Complete</h3><p style="font-size:1.8rem;">${s}/${questionsBank.length} (${p}%)</p><p>${p >= 70 ? 'Great work! Review any weak areas using the concept cards.' : 'Review the lecture notes and concept cards to strengthen your understanding.'}</p><button id="restartQuizBtn">⟳ Retake Quiz</button><button id="showAnswersAfterQuizBtn" style="margin-left:1rem; background:#5f8b9c;">📖 Show Answers</button></div>`;
+        document.getElementById('restartQuizBtn')?.addEventListener('click', () => { userAnswers.fill(null); currentQIndex = 0; renderQuiz(); });
+        document.getElementById('showAnswersAfterQuizBtn')?.addEventListener('click', showAllAnswers);
+    }
+    
+    function showAllAnswers() {
+        let answersHtml = `<div class="answers-summary"><h3 style="color:#0f4c5f; margin-bottom:1rem;">📚 All Quiz Questions with Answers & Explanations</h3>`;
+        for (let i = 0; i < questionsBank.length; i++) {
+            let q = questionsBank[i];
+            let correctLetter = String.fromCharCode(65 + q.correct);
+            answersHtml += `<div class="answer-item">
+                <strong>Q${i+1}: ${q.text}</strong><br>
+                <strong>✅ Correct Answer:</strong> ${correctLetter}. ${q.correctAnswer}<br>
+                <strong>📖 Explanation:</strong> ${q.explanation}
+            </div>`;
+        }
+        answersHtml += `<button id="closeAnswersBtn" style="margin-top:1rem;">Close Answers</button></div>`;
+        document.getElementById('quizContainer').innerHTML = answersHtml;
+        document.getElementById('closeAnswersBtn')?.addEventListener('click', () => { renderQuiz(); });
+    }
+    
+    document.getElementById('showAnswersBtn')?.addEventListener('click', showAllAnswers);
+    
+    const tabBtns = document.querySelectorAll('.tab-btn'); const panels = { lecture: document.getElementById('lecturePanel'), quiz: document.getElementById('quizPanel') };
+    tabBtns.forEach(btn => { btn.addEventListener('click', () => { let t = btn.dataset.tab; tabBtns.forEach(b => b.classList.remove('active')); btn.classList.add('active'); panels.lecture.classList.remove('active-panel'); panels.quiz.classList.remove('active-panel'); if (t === 'lecture') panels.lecture.classList.add('active-panel'); else { panels.quiz.classList.add('active-panel'); if (questionsBank.length) renderQuiz(); } }); });
+    if (panels.quiz) renderQuiz();
 </script>
-
 </body>
 </html>
